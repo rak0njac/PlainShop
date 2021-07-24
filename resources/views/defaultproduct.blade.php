@@ -11,13 +11,13 @@
 {{--                </ol>--}}
 {{--                <div class="carousel-inner">--}}
 {{--                    <div class="carousel-item active">--}}
-{{--                        <img class="d-block w-100" src="..." alt="First slide">--}}
+{{--                        <img class="d-block w-100" src="/img/avatars/{{$product->avatar_url}}" alt="First slide">--}}
 {{--                    </div>--}}
 {{--                    <div class="carousel-item">--}}
-{{--                        <img class="d-block w-100" src="..." alt="Second slide">--}}
+{{--                        <img class="d-block w-100" src="/img/avatars/{{$product->avatar_url}}" alt="Second slide">--}}
 {{--                    </div>--}}
 {{--                    <div class="carousel-item">--}}
-{{--                        <img class="d-block w-100" src="..." alt="Third slide">--}}
+{{--                        <img class="d-block w-100" src="/img/avatars/{{$product->avatar_url}}" alt="Third slide">--}}
 {{--                    </div>--}}
 {{--                </div>--}}
 {{--                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">--}}
@@ -29,7 +29,27 @@
 {{--                    <span class="sr-only">Next</span>--}}
 {{--                </a>--}}
 {{--            </div>--}}
-            <img class="img-fluid img-thumbnail" width="500px" height="500px" src="/img/avatars/{{$product->avatar_url}}">
+{{--            <img class="img-fluid img-thumbnail" width="500px" height="500px" src="/img/avatars/{{$product->avatar_url}}">--}}
+                        <div class="card">
+                            <div class="d-flex flex-column thumbnails">
+                                <div id="f1" class="tb tb-active"> <img class="thumbnail-img fit-image" src="/img/avatars/digicam.webp"> </div>
+                                <div id="f2" class="tb"> <img class="thumbnail-img fit-image" src="/img/avatars/hallux.webp"> </div>
+                                <div id="f3" class="tb"> <img class="thumbnail-img fit-image" src="/img/avatars/mega-style.webp"> </div>
+                                <div id="f4" class="tb"> <img class="thumbnail-img fit-image" src="/img/avatars/smily.webp"> </div>
+                            </div>
+                            <fieldset id="f11" class="active">
+                                <div class="product-pic"> <img class="pic0" src="/img/avatars/digicam.webp"> </div>
+                            </fieldset>
+                            <fieldset id="f21" class="">
+                                <div class="product-pic"> <img class="pic0" src="/img/avatars/hallux.webp"> </div>
+                            </fieldset>
+                            <fieldset id="f31" class="">
+                                <div class="product-pic"> <img class="pic0" src="/img/avatars/mega-style.webp"> </div>
+                            </fieldset>
+                            <fieldset id="f41" class="">
+                                <div class="product-pic"> <img class="pic0" src="/img/avatars/smily.webp"> </div>
+                            </fieldset>
+                        </div>
         </div>
         <div class="col">
                 <h1>{{$product->name}}</h1>
@@ -41,11 +61,12 @@
                 <br>
             <form method="post" action="/updatecart">
                 @csrf
+                <input type="hidden" name="product" value="{{$product->id}}">
             @if($color->count() != 0)
                     <div class="d-flex align-items-center">
                         <span class="me-2">Color:</span>
                         @foreach($color as $c)
-                            <input class="color-radio" type="radio" name="color" id="{{$c->hex}}" />
+                            <input class="color-radio" type="radio" name="color" value="{{$c->id}}" id="{{$c->hex}}" />
                             <label class="color-label" for="{{$c->hex}}">
                                 <span class="color-span" style="background: #{{$c->hex}};"></span>
                             </label>
@@ -57,7 +78,7 @@
                     <div class="d-flex align-items-center">
                         <span class="me-2">Size:</span>
                         @foreach($size as $s)
-                            <input type="radio" name="size" id="{{$s->name}}">
+                            <input type="radio" name="size" value="{{$s->id}}" id="{{$s->name}}">
                             <label style="font-weight: bold" class="me-2" for="{{$s->name}}">{{$s->name}}</label>
                         @endforeach
                     </div>
@@ -73,3 +94,36 @@
         </div>
     </div>
 </div>
+
+
+<script>
+    $(document).ready(function(){
+
+        $(".tb").hover(function(){
+
+            $(".tb").removeClass("tb-active");
+            $(this).addClass("tb-active");
+
+            current_fs = $(".active");
+
+            next_fs = $(this).attr('id');
+            next_fs = "#" + next_fs + "1";
+
+            $("fieldset").removeClass("active");
+            $(next_fs).addClass("active");
+
+            current_fs.animate({}, {
+                step: function() {
+                    current_fs.css({
+                        'display': 'none',
+                        'position': 'relative'
+                    });
+                    next_fs.css({
+                        'display': 'block'
+                    });
+                }
+            });
+        });
+
+    });
+</script>

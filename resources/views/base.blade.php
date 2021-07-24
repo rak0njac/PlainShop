@@ -11,8 +11,9 @@
     <!-- Styles -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
     <link href="/color-chooser.css" rel="stylesheet">
-<style>
-</style>
+    <link href="/product-images.css" rel="stylesheet">
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
 </head>
 <body>
 <nav class="navbar navbar-dark bg-dark mb-5">
@@ -25,7 +26,7 @@
     <div class="col d-flex justify-content-center">
         <form class="form-inline ">
             <div class="input-group">
-                <input type="text" class="form-control" placeholder="Search" aria-label="Search">
+                <input type="text" style="width: 400px;" class="form-control" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -37,7 +38,7 @@
         </form>
     </div>
     <div class="col d-flex justify-content-end me-3">
-        <a class="d-flex align-items-center text-decoration-none">
+        <a href="/cart" class="d-flex align-items-center text-decoration-none">
             <img style="margin-left: 10px; margin-right: 10px;" src="/img/cart.png" width="50px" height="50px">
             <span style="color: white; font-size: 24px;">Cart</span>
         </a>
@@ -46,10 +47,8 @@
 
 
 
-
-
-
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+
 
 </body>
 </html>

@@ -11,7 +11,7 @@ use PHPUnit\Exception;
 
 class ProductController extends Controller
 {
-    function show($shortname){
+    public function show($shortname){
         $product = Product::whereShortName($shortname)->first();
         $color = $product->colors;
         $size = $product->sizes;
@@ -23,10 +23,28 @@ class ProductController extends Controller
         return view('defaultproduct', $params);
     }
 
-    public function updateCart($product, $quantity, $productcolor = null, $productsize = null){
-        setcookie('cart', json_encode([$product, $quantity, $productcolor, $productsize]), time() + (60*60*24*7));
+    public function updateCart(Request $request){
+        $productname = $request->input('product');
+        $quantity = $request->input('quantity');
+        $productcolor = $request->input('color');
+        $productsize = $request->input('size');
+
+        $product = ['product_id'=>$productname, 'quantity'=>$quantity, 'color'=>$productcolor, 'size'=>$productsize];
+
+        //$cart = null;
+        //$productsInCart = array('products'=>array());
+
+        $cart = $_COOKIE['cart'];
+        $productsInCart = json_decode($cart, true);
+
+        array_push($productsInCart['products'], $product);
+        $cart = json_encode($productsInCart);
+
+        setcookie('cart', $cart, time() + (60*60*24*7));
         if (isset($_COOKIE['cart']))
-            echo 'Cookie set successfully!';
-        else echo 'Fuck you!';
+        {
+            return view('cart', ['products'=>json_decode($cart, true)]);
+        }
+        else echo "Cannot set cookie. Make sure cookies are enabled in your web browser.";
     }
 }
