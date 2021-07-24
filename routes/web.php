@@ -18,3 +18,5 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', [HomeController::class, 'show']);
 
 Route::get('/product/{shortname}', [ProductController::class, 'show']);
+
+Route::post('/updatecart', [ProductController::class, 'updateCart']);

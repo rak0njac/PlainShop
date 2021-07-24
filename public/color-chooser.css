@@ -1,25 +1,55 @@
-input[type=radio] {
+.color-radio {
     display: none;
 }
-input[type=radio]:checked + label span {
+
+.color-radio:checked + .color-label .color-span {
     transform: scale(1.25);
     border: 2px solid #000000;
 }
 
-label {
+.color-label {
     display: inline-block;
     width: 25px;
     height: 25px;
     margin-right: 10px;
     cursor: pointer;
 }
-label:hover span {
+
+.color-label:hover .color-span {
     transform: scale(1.25);
 }
-label span {
+.color-label .color-span {
     display: block;
     width: 100%;
     height: 100%;
     transition: transform 0.2s ease-in-out;
     border : 1px solid #718096;
 }
+
+
+
+/*input[type=radio] {*/
+/*    display: none;*/
+/*}*/
+/*input[type=radio]:checked + label span {*/
+/*    transform: scale(1.25);*/
+/*    border: 2px solid #000000;*/
+/*}*/
+
+/*label {*/
+/*    display: inline-block;*/
+/*    width: 25px;*/
+/*    height: 25px;*/
+/*    margin-right: 10px;*/
+/*    cursor: pointer;*/
+/*}*/
+/*label:hover span {*/
+/*    transform: scale(1.25);*/
+/*}*/
+/*label span {*/
+/*    display: block;*/
+/*    width: 100%;*/
+/*    height: 100%;*/
+/*    transition: transform 0.2s ease-in-out;*/
+/*    border : 1px solid #718096;*/
+/*}*/

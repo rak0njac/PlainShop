@@ -32,20 +32,44 @@
             <img class="img-fluid img-thumbnail" width="500px" height="500px" src="/img/avatars/{{$product->avatar_url}}">
         </div>
         <div class="col">
-            <h1>{{$product->name}}</h1>
-            <br>
-            Short description of product
-            <br><br>
-            <del>{{$product->fake_price}} kn</del>
-            <h2>{{$product->price}} kn</h2>
-            <br>
-            <div class="d-flex align-items-center">
-                <span class="me-2">Color:</span>
-                @foreach($color as $color)
-                    <input type="radio" name="color" id="{{$color->hex}}" />
-                    <label for="{{$color->hex}}"><span style="background: #{{$color->hex}};"></span></label>
-                @endforeach
-            </div>
+                <h1>{{$product->name}}</h1>
+                <br>
+                Short description of product
+                <br><br>
+                <del>{{$product->fake_price}} kn</del>
+                <h2>{{$product->price}} kn</h2>
+                <br>
+            <form method="post" action="/updatecart">
+                @csrf
+            @if($color->count() != 0)
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">Color:</span>
+                        @foreach($color as $c)
+                            <input class="color-radio" type="radio" name="color" id="{{$c->hex}}" />
+                            <label class="color-label" for="{{$c->hex}}">
+                                <span class="color-span" style="background: #{{$c->hex}};"></span>
+                            </label>
+                        @endforeach
+                    </div>
+                    <br>
+                @endif
+                @if($size->count() != 0)
+                    <div class="d-flex align-items-center">
+                        <span class="me-2">Size:</span>
+                        @foreach($size as $s)
+                            <input type="radio" name="size" id="{{$s->name}}">
+                            <label style="font-weight: bold" class="me-2" for="{{$s->name}}">{{$s->name}}</label>
+                        @endforeach
+                    </div>
+                    <br>
+                @endif
+                <div class="d-flex align-items-center">
+                    <label for="quantity">Quantity:</label>
+                    <input class="ms-2" type="number" min="1" style="width: 40px" id="quantity" name="quantity" value="1">
+                </div>
+                <br>
+                <input type="submit" class="btn btn-warning btn-lg" value="Add to cart">
+            </form>
         </div>
     </div>
 </div>
