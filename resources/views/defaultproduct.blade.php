@@ -3,34 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-{{--            <div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">--}}
-{{--                <ol class="carousel-indicators">--}}
-{{--                    <li data-target="#carouselExampleIndicators" data-slide-to="0" class="active"></li>--}}
-{{--                    <li data-target="#carouselExampleIndicators" data-slide-to="1"></li>--}}
-{{--                    <li data-target="#carouselExampleIndicators" data-slide-to="2"></li>--}}
-{{--                </ol>--}}
-{{--                <div class="carousel-inner">--}}
-{{--                    <div class="carousel-item active">--}}
-{{--                        <img class="d-block w-100" src="/img/avatars/{{$product->avatar_url}}" alt="First slide">--}}
-{{--                    </div>--}}
-{{--                    <div class="carousel-item">--}}
-{{--                        <img class="d-block w-100" src="/img/avatars/{{$product->avatar_url}}" alt="Second slide">--}}
-{{--                    </div>--}}
-{{--                    <div class="carousel-item">--}}
-{{--                        <img class="d-block w-100" src="/img/avatars/{{$product->avatar_url}}" alt="Third slide">--}}
-{{--                    </div>--}}
-{{--                </div>--}}
-{{--                <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">--}}
-{{--                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>--}}
-{{--                    <span class="sr-only">Previous</span>--}}
-{{--                </a>--}}
-{{--                <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">--}}
-{{--                    <span class="carousel-control-next-icon" aria-hidden="true"></span>--}}
-{{--                    <span class="sr-only">Next</span>--}}
-{{--                </a>--}}
-{{--            </div>--}}
-{{--            <img class="img-fluid img-thumbnail" width="500px" height="500px" src="/img/avatars/{{$product->avatar_url}}">--}}
-                        <div class="card">
+                        <div class="card me-3">
                             <div class="d-flex flex-column thumbnails">
                                 <div id="f1" class="tb tb-active"> <img class="thumbnail-img fit-image" src="/img/avatars/digicam.webp"> </div>
                                 <div id="f2" class="tb"> <img class="thumbnail-img fit-image" src="/img/avatars/hallux.webp"> </div>
@@ -66,7 +39,11 @@
                     <div class="d-flex align-items-center">
                         <span class="me-2">Color:</span>
                         @foreach($color as $c)
-                            <input class="color-radio" type="radio" name="color" value="{{$c->id}}" id="{{$c->hex}}" />
+                            @if ($loop->first)
+                                <input class="color-radio" checked type="radio" name="color" value="{{$c->id}}" id="{{$c->hex}}" />
+                            @else
+                                <input class="color-radio" type="radio" name="color" value="{{$c->id}}" id="{{$c->hex}}" />
+                            @endif
                             <label class="color-label" for="{{$c->hex}}">
                                 <span class="color-span" style="background: #{{$c->hex}};"></span>
                             </label>
@@ -78,7 +55,11 @@
                     <div class="d-flex align-items-center">
                         <span class="me-2">Size:</span>
                         @foreach($size as $s)
-                            <input type="radio" name="size" value="{{$s->id}}" id="{{$s->name}}">
+                            @if ($loop->first)
+                                <input type="radio" checked name="size" value="{{$s->id}}" id="{{$s->name}}">
+                            @else
+                                <input type="radio" name="size" value="{{$s->id}}" id="{{$s->name}}">
+                            @endif
                             <label style="font-weight: bold" class="me-2" for="{{$s->name}}">{{$s->name}}</label>
                         @endforeach
                     </div>
@@ -99,7 +80,7 @@
 <script>
     $(document).ready(function(){
 
-        $(".tb").hover(function(){
+        $(".tb").click(function(){
 
             $(".tb").removeClass("tb-active");
             $(this).addClass("tb-active");

@@ -9,24 +9,23 @@ use Illuminate\Http\Request;
 
 class CartController extends Controller
 {
-    public function show()
+    public function show() //Used only for displaying meaningful information to the customer viewing his cart. When he completes the order, primary keys are accessed from the cookie itself.
     {
         $cart = $_COOKIE['cart'];
         $productsInCart = json_decode($cart, true);
         $arr = array();
 
-        $product = null;
-        $count = 0;
         foreach ($productsInCart['products'] as $product)
         {
-            $p = Product::findOrFail($product['product_id']);
-            $c = ProductColor::find($product['color']);
-            $s = ProductSize::find($product['size']);
-            $q = $product['quantity'];
-            array_push($arr, [$count=>[$p->name, $c->hex, $s->name, $q]]);
-            $count++;
-            print_r($arr);
+            $name = Product::findOrFail($product['product_id'])->name;
+            $color = optional(ProductColor::find($product['color']))->hex;
+            $size = optional(ProductSize::find($product['size']))->name;
+            $quantity = $product['quantity'];
+            array_push($arr, [$name, $color, $size, $quantity]);
         }
+        return view('cart', ['products'=>$arr]);
+        //echo '<pre>'; print_r($arr); echo '</pre>';
 
+        //return view('cart', ['products'=>json_decode($cart, true)]);
     }
 }

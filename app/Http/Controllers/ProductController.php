@@ -33,18 +33,27 @@ class ProductController extends Controller
 
         //$cart = null;
         //$productsInCart = array('products'=>array());
+        if(isset($_COOKIE['cart']))
+        {
+            $cart = $_COOKIE['cart'];
+            $productsInCart = json_decode($cart, true);
+        }
+        else {
+            $cart = null;
+            $productsInCart = array('products'=>array());
+        }
 
-        $cart = $_COOKIE['cart'];
-        $productsInCart = json_decode($cart, true);
+        //$cart = $_COOKIE['cart'];
 
         array_push($productsInCart['products'], $product);
         $cart = json_encode($productsInCart);
 
         setcookie('cart', $cart, time() + (60*60*24*7));
-        if (isset($_COOKIE['cart']))
-        {
-            return view('cart', ['products'=>json_decode($cart, true)]);
-        }
-        else echo "Cannot set cookie. Make sure cookies are enabled in your web browser.";
+        return redirect()->action([CartController::class, 'show']);
+//        if (isset($_COOKIE['cart']))
+//        {
+//            return view('cart', ['products'=>json_decode($cart, true)]);
+//        }
+//        else echo "Cannot set cookie. Make sure cookies are enabled in your web browser.";
     }
 }

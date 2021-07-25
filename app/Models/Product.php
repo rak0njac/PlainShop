@@ -27,6 +27,10 @@ use Illuminate\Database\Eloquent\Model;
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereSKU($value)
  * @method static \Illuminate\Database\Eloquent\Builder|Product whereShortName($value)
  * @mixin \Eloquent
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductColor[] $colors
+ * @property-read int|null $colors_count
+ * @property-read \Illuminate\Database\Eloquent\Collection|\App\Models\ProductSize[] $sizes
+ * @property-read int|null $sizes_count
  */
 class Product extends Model
 {
