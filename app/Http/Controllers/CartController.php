@@ -17,11 +17,12 @@ class CartController extends Controller
 
         foreach ($productsInCart['products'] as $product)
         {
+            $thumbnail = Product::findOrFail($product['product_id'])->avatar_url;
             $name = Product::findOrFail($product['product_id'])->name;
             $color = optional(ProductColor::find($product['color']))->hex;
             $size = optional(ProductSize::find($product['size']))->name;
             $quantity = $product['quantity'];
-            array_push($arr, [$name, $color, $size, $quantity]);
+            array_push($arr, [$thumbnail, $name, $color, $size, $quantity]);
         }
         return view('cart', ['products'=>$arr]);
         //echo '<pre>'; print_r($arr); echo '</pre>';
