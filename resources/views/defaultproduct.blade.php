@@ -35,6 +35,7 @@
             <form method="post" action="/updatecart">
                 @csrf
                 <input type="hidden" name="product" value="{{$product->id}}">
+                <input type="hidden" name="price" value="{{$product->price}}">
             @if($color->count() != 0)
                     <div class="d-flex align-items-center">
                         <span class="me-2">Color:</span>

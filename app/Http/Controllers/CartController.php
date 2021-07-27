@@ -20,9 +20,11 @@ class CartController extends Controller
             $thumbnail = Product::findOrFail($product['product_id'])->avatar_url;
             $name = Product::findOrFail($product['product_id'])->name;
             $color = optional(ProductColor::find($product['color']))->hex;
+            $price = $product['price'];
             $size = optional(ProductSize::find($product['size']))->name;
             $quantity = $product['quantity'];
-            array_push($arr, [$thumbnail, $name, $color, $size, $quantity]);
+            $cookieid = $product['cookie_id'];
+            array_push($arr, [$thumbnail, $name, $price, $color, $size, $quantity, $cookieid]);
         }
         return view('cart', ['products'=>$arr]);
         //echo '<pre>'; print_r($arr); echo '</pre>';

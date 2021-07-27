@@ -24,28 +24,39 @@ class ProductController extends Controller
     }
 
     public function updateCart(Request $request){
+        $cookieid = 0;
         $productname = $request->input('product');
         $quantity = $request->input('quantity');
+        $price = $request->input('price');
         $productcolor = $request->input('color');
         $productsize = $request->input('size');
 
-        $product = ['product_id'=>$productname, 'quantity'=>$quantity, 'color'=>$productcolor, 'size'=>$productsize];
-
-        //$cart = null;
-        //$productsInCart = array('products'=>array());
         if(isset($_COOKIE['cart']))
         {
             $cart = $_COOKIE['cart'];
             $productsInCart = json_decode($cart, true);
+            $lastArray = end($productsInCart['products']);
+            $cookieid = $lastArray['cookie_id'] + 1;
         }
         else {
             $cart = null;
             $productsInCart = array('products'=>array());
         }
 
-        //$cart = $_COOKIE['cart'];
+        $product = ['cookie_id'=>$cookieid, 'product_id'=>$productname, 'quantity'=>$quantity, 'price'=>$price, 'color'=>$productcolor, 'size'=>$productsize];
+
+
+        foreach($productsInCart['products'] as $p)
+        {
+            if ($p['product_id'] == $product['product_id'] && $p['color'] == $product['color'] && $p['size'] == $product['size']){
+                $product['quantity'] += $p['quantity'];
+                $key = array_search($p, $productsInCart['products']);
+                unset($productsInCart['products'][$key]);
+            }
+        }
 
         array_push($productsInCart['products'], $product);
+
         $cart = json_encode($productsInCart);
 
         setcookie('cart', $cart, time() + (60*60*24*7));
