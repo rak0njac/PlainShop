@@ -19,15 +19,17 @@ class CartController extends Controller
 
         foreach ($productsInCart as $product)
         {
-            $p = $product['product']['product_id'];
+            $p = $product['product_id'];
             //Log::info($p);
             $thumbnail = Product::findOrFail($p)->avatar_url;
             $name = Product::findOrFail($p)->name;
-            $color = optional(ProductColor::find($product['product']['color']))->hex;
-            $price = $product['product']['price'];
-            $size = optional(ProductSize::find($product['product']['size']))->name;
-            $quantity = $product['product']['quantity'];
-            $cookieid = $product['cookieId'];
+            $color = optional(ProductColor::find($product['color']))->hex;
+            $price = $product['price'];
+            $size = optional(ProductSize::find($product['size']))->name;
+            $quantity = $product['quantity'];
+
+
+            $cookieid = array_search($product,array_values($productsInCart));
             array_push($arr, [$thumbnail, $name, $price, $color, $size, $quantity, $cookieid]);
         }
         return view('cart', ['products'=>$arr]);
