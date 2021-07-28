@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
@@ -13,17 +14,20 @@ class CartController extends Controller
     {
         $cart = $_COOKIE['cart'];
         $productsInCart = json_decode($cart, true);
+        //Log::info($productsInCart);
         $arr = array();
 
-        foreach ($productsInCart['products'] as $product)
+        foreach ($productsInCart as $product)
         {
-            $thumbnail = Product::findOrFail($product['product_id'])->avatar_url;
-            $name = Product::findOrFail($product['product_id'])->name;
-            $color = optional(ProductColor::find($product['color']))->hex;
-            $price = $product['price'];
-            $size = optional(ProductSize::find($product['size']))->name;
-            $quantity = $product['quantity'];
-            $cookieid = $product['cookie_id'];
+            $p = $product['product']['product_id'];
+            //Log::info($p);
+            $thumbnail = Product::findOrFail($p)->avatar_url;
+            $name = Product::findOrFail($p)->name;
+            $color = optional(ProductColor::find($product['product']['color']))->hex;
+            $price = $product['product']['price'];
+            $size = optional(ProductSize::find($product['product']['size']))->name;
+            $quantity = $product['product']['quantity'];
+            $cookieid = $product['cookieId'];
             array_push($arr, [$thumbnail, $name, $price, $color, $size, $quantity, $cookieid]);
         }
         return view('cart', ['products'=>$arr]);

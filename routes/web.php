@@ -23,3 +23,5 @@ Route::get('/product/{shortname}', [ProductController::class, 'show']);
 Route::post('/updatecart', [ProductController::class, 'updateCart']);
 
 Route::get('/cart', [CartController::class, 'show']);
+
+Route::post('/delete-from-cart', [ProductController::class, 'deleteFromCart']);
