@@ -111,4 +111,35 @@ class ProductController extends Controller
         setcookie('cart', $cart, time() + (60*60*24*7));
         //return (string)$key;
     }
+
+    public function cartChangeQuantity(Request $request)
+    {
+        $cookieid = $request->input('cookie_id');
+        $quantity = $request->input('quantity');
+        $cart = $_COOKIE['cart'];
+        $productsInCart = json_decode($cart, true);
+        $productsInCart = array_values($productsInCart);
+        //$key = array_search($cookieid, $productsInCart);  // $productsInCart['products']);
+        //Log::info(array_keys($productsInCart['products']));
+        $productsInCart[$cookieid]['quantity'] = $quantity;
+
+//        $count = 0;
+//        foreach($productsInCart['products'] as $p)
+//        {
+//            $p['cookie_id'] = $count;
+//            $count++;
+//        }
+
+        //$productsInCart['products'] =
+        //Log::info(array_values($productsInCart));
+        //$productsInCart = array_map('array_values', $productsInCart);
+        //$a = array_column($productsInCart, 'cookieId');
+//        Log::info($productsInCart)
+//        Log::info(array_column($productsInCart, 'cookieId'));
+        //$productsInCart = array_values($productsInCart);
+
+        $cart = json_encode($productsInCart);
+        setcookie('cart', $cart, time() + (60*60*24*7));
+        //return (string)$key;
+    }
 }
