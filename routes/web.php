@@ -27,3 +27,7 @@ Route::get('/cart', [CartController::class, 'show']);
 Route::post('/delete-from-cart', [ProductController::class, 'deleteFromCart']);
 
 Route::post('/cart-change-quantity', [ProductController::class, 'cartChangeQuantity']);
+
+Route::get('/order', [CartController::class, 'showOrderForm']);
+
+Route::post('/finishOrder', [CartController::class, 'finishOrder']);
