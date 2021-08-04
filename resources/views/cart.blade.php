@@ -56,10 +56,10 @@
                 </tbody>
             </table>
         </div>
-        <button id="btn-continue" type="submit" class="btn btn-lg btn-warning mt-3" >
+        <a href="/order" id="btn-continue" type="submit" class="btn btn-lg btn-warning mt-3" >
             Continue
             <span style="display: none" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
-        </button>
+        </a>
 
     </div>
 </div>

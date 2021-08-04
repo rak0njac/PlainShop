@@ -25,9 +25,9 @@
         </a>
     </div>
     <div class="col d-flex justify-content-center">
-        <form class="form-inline ">
+        <form class="form-inline" method="post" action="/search">
             <div class="input-group">
-                <input type="text" style="width: 400px;" class="form-control" placeholder="Search" aria-label="Search">
+                <input type="text" name="query" style="width: 400px;" class="form-control" placeholder="Search" aria-label="Search">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">

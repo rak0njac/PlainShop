@@ -31,3 +31,5 @@ Route::post('/cart-change-quantity', [ProductController::class, 'cartChangeQuant
 Route::get('/order', [CartController::class, 'showOrderForm']);
 
 Route::post('/finishOrder', [CartController::class, 'finishOrder']);
+
+Route::post('/search', [HomeController::class, 'search']);
