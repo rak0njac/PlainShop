@@ -24,6 +24,11 @@
             <span class="navbar-text" style="font-family: Impact; font-style: italic; font-size:30px; color: white;">PlainShop</span>
         </a>
     </div>
+    @auth
+        <h1 style="color: white">AUTHENTICATED</h1>
+    @else
+        <h1 style="color: white">NOT AUTHENTICATED</h1>
+    @endauth
     <div class="col d-flex justify-content-center">
         <form class="form-inline" method="post" action="/search">
             <div class="input-group">
