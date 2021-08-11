@@ -25,7 +25,6 @@ class ProductController extends Controller
     }
 
     public function updateCart(Request $request){
-        //$cookieId = 0;
         $productId = $request->input('product');
         $quantity = $request->input('quantity');
         $price = $request->input('price');
@@ -37,17 +36,11 @@ class ProductController extends Controller
             $cart = $_COOKIE['cart'];
             $productsInCart = json_decode($cart, true);
             $productsInCart = array_values($productsInCart);
-            //$lastArray = end($productsInCart);
-            //$cookieId = key($lastArray) + 1;
         }
         else {
-            $cart = null;
-            //$productsInCart = array('products'=>array());
             $productsInCart = array();
-            //$productsInCart = array(["cookieId"=>cookieId, "product"=>["product_id"=>$productId, "quantity"=>$quantity, "price"=>$price, "color"=>$color, "size"=>$size]]);
         }
 
-        //$product = ['cookie_id'=>$cookieId, 'product_id'=>$productId, 'quantity'=>$quantity, 'price'=>$price, 'color'=>$color, 'size'=>$size];
 
         $tempArr = $productsInCart;
         $check = false;
@@ -60,9 +53,6 @@ class ProductController extends Controller
                 $tempArr[$key]['quantity'] = $quantity;
                 Log::info($key);
                 $check = true;
-                //unset($productsInCart[$key]);
-                //$key = array_search($p, $productsInCart['products']);
-                //unset($productsInCart['products'][$key]);
             }
         }
 
@@ -75,11 +65,6 @@ class ProductController extends Controller
 
         setcookie('cart', $cart, time() + (60*60*24*7));
         return redirect()->action([CartController::class, 'show']);
-//        if (isset($_COOKIE['cart']))
-//        {
-//            return view('cart', ['products'=>json_decode($cart, true)]);
-//        }
-//        else echo "Cannot set cookie. Make sure cookies are enabled in your web browser.";
     }
 
     public function deleteFromCart(Request $request)
@@ -88,28 +73,10 @@ class ProductController extends Controller
         $cart = $_COOKIE['cart'];
         $productsInCart = json_decode($cart, true);
         $productsInCart = array_values($productsInCart);
-        //$key = array_search($cookieid, $productsInCart);  // $productsInCart['products']);
-        //Log::info(array_keys($productsInCart['products']));
         unset($productsInCart[$cookieid]);
-
-//        $count = 0;
-//        foreach($productsInCart['products'] as $p)
-//        {
-//            $p['cookie_id'] = $count;
-//            $count++;
-//        }
-
-        //$productsInCart['products'] =
-        //Log::info(array_values($productsInCart));
-        //$productsInCart = array_map('array_values', $productsInCart);
-        //$a = array_column($productsInCart, 'cookieId');
-//        Log::info($productsInCart)
-//        Log::info(array_column($productsInCart, 'cookieId'));
-        //$productsInCart = array_values($productsInCart);
 
         $cart = json_encode($productsInCart);
         setcookie('cart', $cart, time() + (60*60*24*7));
-        //return (string)$key;
     }
 
     public function cartChangeQuantity(Request $request)
@@ -119,27 +86,16 @@ class ProductController extends Controller
         $cart = $_COOKIE['cart'];
         $productsInCart = json_decode($cart, true);
         $productsInCart = array_values($productsInCart);
-        //$key = array_search($cookieid, $productsInCart);  // $productsInCart['products']);
-        //Log::info(array_keys($productsInCart['products']));
         $productsInCart[$cookieid]['quantity'] = $quantity;
 
-//        $count = 0;
-//        foreach($productsInCart['products'] as $p)
-//        {
-//            $p['cookie_id'] = $count;
-//            $count++;
-//        }
-
-        //$productsInCart['products'] =
-        //Log::info(array_values($productsInCart));
-        //$productsInCart = array_map('array_values', $productsInCart);
-        //$a = array_column($productsInCart, 'cookieId');
-//        Log::info($productsInCart)
-//        Log::info(array_column($productsInCart, 'cookieId'));
-        //$productsInCart = array_values($productsInCart);
 
         $cart = json_encode($productsInCart);
         setcookie('cart', $cart, time() + (60*60*24*7));
-        //return (string)$key;
+    }
+
+    public function adminShowProducts()
+    {
+        $products = Product::all();
+        return view('productmanagement', ['products'=>$products]);
     }
 }

@@ -1,0 +1,30 @@
+CUSTOMER:
+
+-add total price calculation on order form view
+-add order data validation
+-add number of products next to "Cart" text in navbar (and prevent from clicking if 0 products in cart)
+
+MANAGER:
+
+-add product thumbnail change view and controller
+-implement save and delete for product table rows
+-add search product by SKU, name, short_name
+-add new product button, view and controller
+-add order details view and controller with "Change status to Sent" button
+-implement save and delete for order table rows
+-add search order by ID, customer, GSM, email, tracking NR
+-add new agent view and controller
+-implement save and delete for agent table rows
+-add search agents by username, email, name
+-add password change mechanism
+
+AGENT:
+
+-add create order view and controller
+-set up authorization guards
+-add password_change_required column in db and a required mechanism for newly added agents to change their passwords
+-add agent panel with create order, change password and logout buttons
+
+GENERAL:
+
+-LOTS of code refactoring
