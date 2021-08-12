@@ -21,8 +21,8 @@
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($products as $product)
-                    <tr id="{{$product[6]}}">
+                @foreach($cart->details as $detail)
+                    <tr id="{{$detail->id}}">
                         <td class="align-middle">
                                 <button class="btn btn-danger btn-sm cart-delete" type="submit">
                                     <span style="display: none" class="spinner-border spinner-border-sm" role="status" aria-hidden="true"></span>
@@ -32,25 +32,25 @@
                                     </svg>
                                 </button>
                         </td>
-                        <td><img src="/img/avatars/{{$product[0]}}" width="50px" height="50px"></td>
+                        <td><img src="/img/avatars/{{$detail->product->avatar_url}}" width="50px" height="50px"></td>
                         <td>
                             <div class="d-flex align-items-center">
-                                {{$product[1]}}
-                                @if(!empty($product[4]))
-                                    - Size: {{$product[4]}}
+                                {{$detail->product->name}}
+                                @if(!empty($detail->productSize))
+                                    - Size: {{$detail->productSize->name}}
                                 @endif
-                                @if(!empty($product[3]))
+                                @if(!empty($detail->productColor))
                                     - Color:
                                     <label class="color-label ms-2">
 
-                                        <span class="color-span" style="background: #{{$product[3]}};"></span>
+                                        <span class="color-span" style="background: #{{$detail->productColor->hex}};"></span>
                                     </label>
                                 @endif
                             </div>
                         </td>
-                        <td class="price">{{$product[2]}}</td>
-                        <td class="quantity"><input class="change-quantity" style="width: 40px;" type="number" min="1" max="50" value="{{$product[5]}}"></td>
-                        <td class="total-price">Total</td>
+                        <td class="price">{{$detail->price}}</td>
+                        <td class="quantity"><input class="change-quantity" style="width: 40px;" type="number" min="1" max="50" value="{{$detail->qty}}"></td>
+                        <td class="total-price">{{$detail->total_price}}</td>
                     </tr>
                 @endforeach
                 </tbody>
@@ -96,11 +96,6 @@
                     $(row).remove()
                 })
         })
-
-        // "/delete-from-cart/", {"cookie_id":id}, function (){
-        //     console.log('OK!')
-        //     $(row).hide(500)
-        // })
     })
 
         $(".change-quantity").change(function (){
@@ -121,23 +116,7 @@
             }).done(function (data){
                 $("#btn-continue").attr("disabled", false)
                 $("#btn-continue").children("span").hide();
-                changeTotal($(row))
-            })
-        })
-
-        function changeTotal(tr)
-        {
-            var price = $(tr).find('.price').text()
-            var quantity = $(tr).find('.quantity').children("input").val()
-            var fixedPrice = parseFloat(price).toFixed(2)
-            var val = fixedPrice * quantity
-            //console.log(parseFloat(price))
-            $(tr).find('.total-price').text(val.toFixed(2))
-        }
-
-        $(document).ready(function (){
-            $("tr").each(function (){
-                changeTotal($(this))
+                $(row).find('.total-price').text(parseFloat(data).toFixed(2))
             })
         })
 </script>

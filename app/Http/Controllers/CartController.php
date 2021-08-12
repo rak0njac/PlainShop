@@ -2,46 +2,91 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Cart;
+use App\Models\CartDetail;
 use App\Models\Order;
 use App\Models\OrderDetail;
 use App\Models\Product;
 use App\Models\ProductColor;
 use App\Models\ProductSize;
 use Carbon\Carbon;
-use http\Cookie;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 
 class CartController extends Controller
 {
-    public function show() // Used only for displaying meaningful information to the customer viewing his cart. When he completes the order, primary keys are accessed from the cookie itself.
+    public function getCartView()
     {
-        $cart = $_COOKIE['cart'];
-        $productsInCart = json_decode($cart, true);
-        //Log::info($productsInCart);
-        $arr = array();
-
-        foreach ($productsInCart as $product)
+        if(!Cookie::has('cart'))
         {
-            $p =            $product['product_id'];
-            //Log::info($p);
-            $thumbnail =    Product::findOrFail($p)->avatar_url;
-            $name =         Product::findOrFail($p)->name;
-            $color =        optional(ProductColor::find($product['color']))->hex;
-            $price =        $product['price'];
-            $size =         optional(ProductSize::find($product['size']))->name;
-            $quantity =     $product['quantity'];
-
-
-            $cookieid =     array_search($product,array_values($productsInCart));
-            array_push($arr, [$thumbnail, $name, $price, $color, $size, $quantity, $cookieid]);
+            return print_r('No cookie set');
         }
-        return view('cart', ['products'=>$arr]);
-        //echo '<pre>'; print_r($arr); echo '</pre>';
+        else {
+            $cartId =  Cookie::get('cart');
+            $cart = Cart::whereId($cartId)->first();
+        }
 
-        //return view('cart', ['products'=>json_decode($cart, true)]);
+        return view('cart', ['cart'=>$cart]);
     }
+
+
+    public function addToCart(Request $request){
+        if(!Cookie::has('cart'))
+        {
+            $cart = new Cart();
+            $cart->save();
+            Cookie::queue('cart', $cart->id, 60*60*24*7);
+        }
+        else {
+            $cartId =  Cookie::get('cart');
+            Log::info('Cart id extracted from cookie:'.print_r($cartId));
+            $cart = Cart::whereId($cartId)->first();
+        }
+
+        $product = Product::whereId($request->input('product'))->first();
+        $color = ProductColor::whereId($request->input('color'))->first();
+        $size = ProductSize::whereId($request->input('size'))->first();
+
+        $quantity = $request->input('quantity');
+        $price = $request->input('price');
+        $totalPrice = $quantity * $price;
+
+        $check = false;     //Check if we will just be increasing quantity for a product already in cart, or adding a new product to the cart
+
+        foreach($cart->details as $detail)
+        {
+            Log::info('Entered foreach loop');
+            if ($detail->product == $product && $detail->productColor == $color && $detail->productSize == $size){
+                Log::info('Entered if loop');
+                $detail->qty += $quantity;
+                $detail->price = $price;
+                $detail->total_price = $detail->qty * $detail->price;
+                $detail->save();
+                $check = true;
+            }
+        }
+
+        if(!$check)
+        {
+            Log::info('Check is false');
+            $detail = new CartDetail();
+            $detail->cart_id = $cart->id;
+            $detail->product_id = $product->id;
+            $detail->qty = $quantity;
+            $detail->price = $price;
+            $detail->product_color_id = optional($color)->id;
+            $detail->product_size_id = optional($size)->id;
+            $detail->total_price = $totalPrice;
+            $detail->save();
+        }
+        return redirect()->action([CartController::class, 'getCartView']);
+    }
+
+
+
+
 
     public function showOrderForm(){
         if(isset($_COOKIE['cart'])) {
@@ -109,8 +154,6 @@ class CartController extends Controller
         $order->subtotal_price = $subtotal;
         $order->save();
 
-        //setcookie('cart', time() - 3600);
-        //return redirect()->action([HomeController::class, 'show']);
         return view('orderconfirmation', ['order'=>$order]);
     }
 }

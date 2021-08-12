@@ -4,7 +4,7 @@
     <div class="row">
         <div class="col">
             @if ($errors->any())
-                <div class="alert alert-danger">
+                <div class="alert alert-danger mb-2">
                     <ul>
                         @foreach ($errors->all() as $error)
                             <li>{{ $error }}</li>
@@ -12,20 +12,19 @@
                     </ul>
                 </div>
             @endif
-            <form method="post" action="/login">
+            {{Form::open(array('url'=>'login'))}}
                 <div class="form-group">
-                    <label for="user">Username</label>
-                    <input type="text" class="form-control" id="user" name="user" placeholder="Username">
+                    {{Form::label('user', 'Username', array('class'=>'form-label'))}}
+                    {{Form::text('user', null, array('class'=>'form-control', 'placeholder'=>'Username'))}}
+
                 </div>
                 <div class="form-group">
-                    <label for="pass">Password</label>
-                    <input type="password" class="form-control" id="pass" name="pass" placeholder="Password">
+                    {{Form::label('pass', 'Password', array('class'=>'form-label'))}}
+                    {{Form::text('pass', null, array('class'=>'form-control', 'placeholder'=>'Password'))}}
+
                 </div>
-                <button type="submit" class="btn btn-primary">Submit</button>
-            </form>
-            <form method="post" action="/logout">
-                <button type="submit" class="btn btn-primary">Logout</button>
-            </form>
+                {{Form::button('Submit', array('class'=>'btn btn-primary', 'type'=>'submit'))}}
+                {{Form::close()}}
         </div>
     </div>
 </div>

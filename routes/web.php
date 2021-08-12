@@ -4,6 +4,7 @@ use App\Http\Controllers\AgentController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\LoginController;
+use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
 use Illuminate\Support\Facades\Route;
@@ -19,13 +20,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::get('/', [HomeController::class, 'show']);
+Route::get('/', [HomeController::class, 'getActiveProducts']);
 
-Route::get('/product/{shortname}', [ProductController::class, 'show']);
+Route::get('/product/{shortname}', [ProductController::class, 'getProductView']);
 
-Route::post('/updatecart', [ProductController::class, 'updateCart']);
+Route::post('/updatecart', [CartController::class, 'addToCart']);
 
-Route::get('/cart', [CartController::class, 'show']);
+Route::get('/cart', [CartController::class, 'getCartView']);
 
 Route::post('/delete-from-cart', [ProductController::class, 'deleteFromCart']);
 
@@ -39,14 +40,14 @@ Route::get('/admin', function (){
     return view('manager');
 })->middleware('auth');
 
-Route::get('/login', [LoginController::class, 'show'])->name('login');
+Route::get('/login', [LoginController::class, 'login'])->name('login');
 
 Route::post('/login', [LoginController::class, 'login']);
 
 Route::get('/logout', [LoginController::class, 'logout']);
 
-Route::get('/product-management', [ProductController::class, 'adminShowProducts']);
+Route::get('/product-management', [ManagerController::class, 'getAllProducts']);
 
-Route::get('/order-management', [OrderController::class, 'getAllOrders']);
+Route::get('/order-management', [ManagerController::class, 'getAllOrders']);
 
-Route::get('/agent-management', [AgentController::class, 'getAllAgents']);
+Route::get('/agent-management', [ManagerController::class, 'getAllAgents']);

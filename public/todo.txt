@@ -1,9 +1,3 @@
-CUSTOMER:
-
--add total price calculation on order form view
--add order data validation
--add number of products next to "Cart" text in navbar (and prevent from clicking if 0 products in cart)
-
 MANAGER:
 
 -add product thumbnail change view and controller
@@ -25,6 +19,13 @@ AGENT:
 -add password_change_required column in db and a required mechanism for newly added agents to change their passwords
 -add agent panel with create order, change password and logout buttons
 
+CUSTOMER:
+
+-add total price calculation on order form view
+-add order data validation
+-add number of products next to "Cart" text in navbar (and prevent from clicking if 0 products in cart)
+
 GENERAL:
 
 -LOTS of code refactoring
+-add project documentation
