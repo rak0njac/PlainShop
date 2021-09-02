@@ -1,6 +1,5 @@
 MANAGER:
 
--add product thumbnail change view and controller
 -implement save and delete for product table rows
 -add search product by SKU, name, short_name
 -add new product button, view and controller
@@ -29,3 +28,9 @@ GENERAL:
 
 -LOTS of code refactoring
 -add project documentation
+
+------------DONE-----------
+
+MANAGER:
+
+-add product thumbnail change view and controller ---NOTES: BEAUTIFY IF HAVE TIME

@@ -86,8 +86,6 @@ class CartController extends Controller
 
 
 
-
-
     public function showOrderForm(){
         if(isset($_COOKIE['cart'])) {
             $cart = $_COOKIE['cart'];

@@ -51,3 +51,7 @@ Route::get('/product-management', [ManagerController::class, 'getAllProducts']);
 Route::get('/order-management', [ManagerController::class, 'getAllOrders']);
 
 Route::get('/agent-management', [ManagerController::class, 'getAllAgents']);
+
+Route::get("/product-management/edit-thumbnail/{productid}", [ManagerController::class, 'getChangeProductThumbnailView']);
+
+Route::post("/product-management/edit-thumbnail/save", [ManagerController::class, 'changeProductThumbnail']);
