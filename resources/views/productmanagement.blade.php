@@ -20,12 +20,12 @@
                 </thead>
                 <tbody>
                 @foreach($products as $product)
-                    <tr>
-                        <td style="width: 150px"><input  class="form-control" type="text" value="{{$product->SKU}}"></td>
-                        <td><input class="form-control" type="text" value="{{$product->name}}"></td>
-                        <td style="width: 150px"><input  class="form-control" type="text" value="{{$product->short_name}}"></td>
-                        <td style="width: 150px"><input  class="form-control" type="text" value="{{$product->price}}"></td>
-                        <td style="width: 150px" ><input class="form-control" type="text" value="{{$product->fake_price}}"></td>
+                    <tr data-id="{{$product->id}}">
+                        <td style="width: 150px"><input  class="form-control" name="SKU" type="text" value="{{$product->SKU}}"></td>
+                        <td><input class="form-control" type="text" name="name" value="{{$product->name}}"></td>
+                        <td style="width: 150px"><input  class="form-control" name="short_name" type="text" value="{{$product->short_name}}"></td>
+                        <td style="width: 150px"><input  class="form-control" name="price" type="text" value="{{$product->price}}"></td>
+                        <td style="width: 150px" ><input class="form-control" name="fake_price" type="text" value="{{$product->fake_price}}"></td>
                         <td style="width: 150px">
                                 <img style="border-width: 1px; border-style: solid" width="40px" src="/img/avatars/{{$product->avatar_url}}">
                             <span>
@@ -33,12 +33,12 @@
                             </span>
                         </td>
                         <td style="width: 100px">
-                            <select class="form-select">
+                            <select name="hidden" class="form-select">
                                 <option @if($product->hidden == 1) selected @endif value="1">Yes</option>
                                 <option @if($product->hidden == 0) selected @endif value="0">No</option>
                             </select>
                         </td>
-                        <td style="width: 100px"><button type="button" class="btn btn-primary">
+                        <td style="width: 100px"><button type="button" class="btn btn-primary btn-save">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
                                     <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"></path>
                                 </svg>
@@ -61,3 +61,64 @@
 
     </div>
 </div>
+
+<script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    $('.btn-save').click(function (){
+        $("#spinner-back").addClass('show')
+        $("#spinner-front").addClass('show')
+
+        var row = $(this).parents("tr");
+        save(row)
+    })
+
+    $('.btn-delete').click(function (){
+        $("#spinner-back").addClass('show')
+        $("#spinner-front").addClass('show')
+
+        var row = $(this).parents("tr");
+        delete(row)
+    })
+
+    function save(row)
+    {
+        var id = $(row).attr('data-id')
+        var SKU = $(row).find('input[name=SKU]').val()
+        var name = $(row).find('input[name=name]').val()
+        var short_name = $(row).find('input[name=short_name]').val()
+        var price = $(row).find('input[name=price]').val()
+        var fake_price = $(row).find('input[name=fake_price]').val()
+            var select = $(row).find('select[name=hidden]')
+        var hidden = $(select).find(':selected').val()
+
+        $.ajax({
+            method: "POST",
+            url: "/product-management/save",
+            data: {id:id, SKU:SKU,name:name,short_name:short_name,price:price,fake_price:fake_price,hidden:hidden}
+        }).done(function (data){
+            console.log(data)
+            $("#spinner-back").removeClass('show')
+            $("#spinner-front").removeClass('show')
+        })
+    }
+
+    function delete(row)
+    {
+        var id = $(row).attr('data-id')
+
+        $.ajax({
+            method: "POST",
+            url: "/product-management/delete",
+            data: {id:id}
+        }).done(function (data){
+            console.log(data)
+            $("#spinner-back").removeClass('show')
+            $("#spinner-front").removeClass('show')
+        })
+    }
+</script>

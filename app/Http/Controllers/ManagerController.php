@@ -22,26 +22,7 @@ class ManagerController extends AgentController
         return view('productmanagement', ['products'=>$products]);
     }
 
-    public function getChangeProductThumbnailView($productid){
-        $product = Product::whereId($productid)->first();
-        return view('change-product-thumbnail', ['product'=>$product]);
-    }
 
-    public function changeProductThumbnail(Request $request)
-    {
-        $product = Product::whereId($request->input('product'))->first();
-        if($request->file('file')->extension() == 'jpg' ||
-            $request->file('file')->extension() == 'bmp' ||
-            $request->file('file')->extension() == 'png' ||
-            $request->file('file')->extension() == 'webp')
-        {
-            $file = $request->file('file')->store('product-thumbnails', ['disk'=>'public']);
-            $product->avatar_url = $file;
-            $product->save();
-            return redirect()->action([ManagerController::class, 'getChangeProductThumbnailView'], ['productid'=>$product->id]);
-        }
-    else echo 'File extension must be jpg/bmp/png/webp';
-    }
 
     public function findAgent(Request $request){}
     public function findProduct(Request $request){}

@@ -53,4 +53,38 @@ class ProductController extends Controller
     }
 
 
+    public function getChangeProductThumbnailView($productid){
+        $product = Product::whereId($productid)->first();
+        return view('change-product-thumbnail', ['product'=>$product]);
+    }
+
+    public function changeProductThumbnail(Request $request)
+    {
+        $product = Product::whereId($request->input('product'))->first();
+        if($request->file('file')->extension() == 'jpg' ||
+            $request->file('file')->extension() == 'bmp' ||
+            $request->file('file')->extension() == 'png' ||
+            $request->file('file')->extension() == 'webp')
+        {
+            $file = $request->file('file')->store('product-thumbnails', ['disk'=>'public']);
+            $product->avatar_url = $file;
+            $product->save();
+            return redirect()->action([ProductController::class, 'getChangeProductThumbnailView'], ['productid'=>$product->id]);
+        }
+        else echo 'File extension must be jpg/bmp/png/webp';
+    }
+
+    public function save(Request $request)
+    {
+        $product = Product::whereId($request->input('id'))->first();
+        $product->SKU = $request->input('SKU');
+        $product->name = $request->input('name');
+        $product->short_name = $request->input('short_name');
+        $product->price = $request->input('price');
+        $product->fake_price = $request->input('fake_price');
+        $product->hidden = $request->input('hidden');
+        $product->save();
+        return 'SUCCESS';
+    }
+
 }
