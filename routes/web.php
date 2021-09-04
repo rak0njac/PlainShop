@@ -57,3 +57,7 @@ Route::get("/product-management/edit-thumbnail/{productid}", [ProductController:
 Route::post("/product-management/edit-thumbnail/save", [ProductController::class, 'changeProductThumbnail']);
 
 Route::post('/product-management/save', [ProductController::class, 'save']);
+
+Route::post('/product-management/delete', [ProductController::class, 'delete']);
+
+Route::post('/product-management/search', [ProductController::class, 'search']);

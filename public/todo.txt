@@ -1,7 +1,6 @@
 MANAGER:
 
--implement save and delete for product table rows
--add search product by SKU, name, short_name
+
 -add new product button, view and controller
 -add order details view and controller with "Change status to Sent" button
 -implement save and delete for order table rows
@@ -34,3 +33,5 @@ GENERAL:
 MANAGER:
 
 -add product thumbnail change view and controller ---NOTES: BEAUTIFY IF HAVE TIME
+-implement save and delete for product table rows --NOTES: ADD VALIDATION
+-add search product by SKU, name, short_name --NOTES: ADD ENTER HOTKEY

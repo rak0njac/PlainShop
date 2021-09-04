@@ -87,4 +87,25 @@ class ProductController extends Controller
         return 'SUCCESS';
     }
 
+    public function delete(Request $request)
+    {
+        $product = Product::whereId($request->input('id'))->first();
+        $product->delete();
+        return 'SUCCESS';
+    }
+
+    public function search(Request $request)
+    {
+        $sku = $request->input('sku');
+        $name = $request->input('name');
+        $shortname = $request->input('shortname');
+
+        $products = Product::where('sku', 'like', '%'.$sku.'%')
+            ->where('name', 'like', '%'.$name.'%')
+            ->where('short_name', 'like', '%'.$shortname.'%')
+            ->get();
+
+        return $products;
+    }
+
 }
