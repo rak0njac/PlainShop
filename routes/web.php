@@ -61,3 +61,9 @@ Route::post('/product-management/save', [ProductController::class, 'save']);
 Route::post('/product-management/delete', [ProductController::class, 'delete']);
 
 Route::post('/product-management/search', [ProductController::class, 'search']);
+
+Route::post('/order-management/save', [OrderController::class, 'save']);
+
+Route::post('/order-management/delete', [OrderController::class, 'delete']);
+
+Route::post('/order-management/search', [OrderController::class, 'search']);
