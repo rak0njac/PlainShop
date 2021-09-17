@@ -1,7 +1,7 @@
 MANAGER:
 
 
--add new product button, view and controller
+
 -add order details view and controller with "Change status to Sent" button
 -add new agent view and controller
 -implement save and delete for agent table rows
@@ -35,3 +35,4 @@ MANAGER:
 -add search product by SKU, name, short_name --NOTES: ADD ENTER HOTKEY
 -implement save and delete for order table rows
 -add search order by ID, customer, GSM, email, tracking NR
+-add new product button, view and controller --NOTES: ADD VALIDATION

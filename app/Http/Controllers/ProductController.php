@@ -108,4 +108,25 @@ class ProductController extends Controller
         return $products;
     }
 
+    public function add(Request $request)
+    {
+        if($request->isMethod('get')){
+            return view('new-product');
+        }
+        else {
+            $product = new Product();
+            $product->SKU = $request->input('sku');
+            $product->name = $request->input('name');
+            $product->short_name = $request->input('shortname');
+            $product->price = $request->input('price');
+            $product->fake_price = $request->input('fakeprice');
+            $product->avatar_url = $request->file('thumbnail')->store('product-thumbnails', ['disk'=>'public']);
+            $product->hidden = $request->input('hidden');
+
+            $product->save();
+            return redirect()->action([ManagerController::class, 'getAllProducts']);
+
+        }
+    }
+
 }

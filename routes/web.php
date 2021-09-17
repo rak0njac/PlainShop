@@ -7,6 +7,7 @@ use App\Http\Controllers\LoginController;
 use App\Http\Controllers\ManagerController;
 use App\Http\Controllers\OrderController;
 use App\Http\Controllers\ProductController;
+use App\Models\OrderDetail;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -67,3 +68,7 @@ Route::post('/order-management/save', [OrderController::class, 'save']);
 Route::post('/order-management/delete', [OrderController::class, 'delete']);
 
 Route::post('/order-management/search', [OrderController::class, 'search']);
+
+Route::any("/product-management/add", [ProductController::class, 'add']);
+
+Route::get("/order-management/order-details/{orderId}", [OrderController::class, 'getOrderDetailsView']);

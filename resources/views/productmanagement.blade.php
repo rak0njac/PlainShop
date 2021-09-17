@@ -5,6 +5,9 @@
         <div class="col">
             <h1>Product management</h1>
             <div class="border rounded p-3 mb-3">
+                <a class="btn btn-primary" href="/product-management/add">Add new product</a>
+            </div>
+            <div class="border rounded p-3 mb-3">
                 <h4>Search</h4>
                 <div class="d-flex justify-content-between" >
                     <div>
