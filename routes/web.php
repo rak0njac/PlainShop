@@ -72,3 +72,7 @@ Route::post('/order-management/search', [OrderController::class, 'search']);
 Route::any("/product-management/add", [ProductController::class, 'add']);
 
 Route::get("/order-management/order-details/{orderId}", [OrderController::class, 'getOrderDetailsView']);
+
+Route::post('/order-management/order-details/save', [OrderController::class, 'saveDetail']);
+
+Route::post('/order-management/order-details/delete', [OrderController::class, 'deleteDetail']);

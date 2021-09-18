@@ -28,6 +28,38 @@
                         <label for="search-tracking_nr">Tracking</label>
                         <input class="form-control me-5" type="text" id="search-tracking_nr">
                     </div>
+                    <div>
+                        <label for="search-status">Status</label>
+                        <select class="form-select me-5" id="search-status">
+                            <option value="Any">
+                                Any
+                            </option>
+                            <option value="New">
+                                New
+                            </option>
+                            <option value="Waiting for stock">
+                                Waiting for stock
+                            </option>
+                            <option value="Sent">
+                                Sent
+                            </option>
+                            <option value="Deleted">
+                                Deleted
+                            </option>
+                            <option value="Rejected">
+                                Rejected
+                            </option>
+                            <option value="Problem">
+                                Problem
+                            </option>
+                            <option value="Returned - Exchange">
+                                Returned - Exchange
+                            </option>
+                            <option value="Returned - Refund">
+                                Returned - Refund
+                            </option>
+                        </select>
+                    </div>
 
                     <button class="btn btn-primary btn-search">Search</button>
                 </div>
@@ -125,12 +157,13 @@
         var customer_phone = $("#search-customer_phone").val()
         var customer_email = $("#search-customer_email").val()
         var tracking_nr = $("#search-tracking_nr").val()
-
+        var status = $("#search-status :selected").val()
+        console.log(status)
 
         $.ajax({
             method: "POST",
             url: "/order-management/search",
-            data: {id:id,customer_name:customer_name,customer_phone:customer_phone,customer_email:customer_email,tracking_nr:tracking_nr}
+            data: {id:id,customer_name:customer_name,customer_phone:customer_phone,customer_email:customer_email,tracking_nr:tracking_nr,status:status}
         }).done(function (data){
             console.log(data)
             $(".body").empty();

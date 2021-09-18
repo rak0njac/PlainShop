@@ -45,13 +45,18 @@ class OrderController extends Controller
         $customer_phone = $request->input('customer_phone');
         $customer_email = $request->input('customer_email');
         $tracking_nr = $request->input('tracking_nr');
+        $status = $request->input('status');
 
-        return Order::where('id', 'like', '%'.$id.'%')
-            ->where('customer_name', 'like', '%'.$customer_name.'%')
-            ->where('customer_phone', 'like', '%'.$customer_phone.'%')
-            ->where('customer_email', 'like', '%'.$customer_email.'%')
-            ->where('tracking_nr', 'like', '%'.$tracking_nr.'%')
-            ->get();
+        $orders = Order::   where('id', 'like', '%'.$id.'%')
+                            ->where('customer_name', 'like', '%'.$customer_name.'%')
+                            ->where('customer_phone', 'like', '%'.$customer_phone.'%')
+                            ->where('customer_email', 'like', '%'.$customer_email.'%')
+                            ->where('tracking_nr', 'like', '%'.$tracking_nr.'%')->get();
+
+        if($status == "Any")
+            return $orders;
+        else
+            return $orders->where('status', '=', $status);
     }
 
     public function getOrderDetailsView($orderId){
@@ -61,25 +66,19 @@ class OrderController extends Controller
         return view('order-details', ['order'=>$order, 'details'=>$details]);
     }
 
-    public function deleteAllDetails(Request $request){
-        $order_id = $request->input('order_id');
+    public function deleteDetail(Request $request){
+        $id = $request->input('id');
 
-        OrderDetail::whereOrderId($order_id)->delete();
+        OrderDetail::whereId($id)->delete();
 
         return 'SUCCESS';
     }
 
     public function saveDetail(Request $request){
-        $detail = new OrderDetail();
+        $detail = OrderDetail::whereId($request->input("id"))->first();
 
-        $detail->order_id = $request->input("order_id");
-        $detail->product_id = $request->input("product_id");
-        $detail->product_color_id = $request->input("product_color_id");
-        $detail->product_size_id = $request->input("product_size_id");
         $detail->qty = $request->input("qty");
         $detail->price_after_tax = $request->input("price_after_tax");
-        $detail->tax = $request->input("tax");
-        $detail->price = 0;
         $detail->total_price = $detail->price_after_tax * $detail->qty;
 
         $detail->save();

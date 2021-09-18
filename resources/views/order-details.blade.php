@@ -4,7 +4,7 @@
     <div class="row">
         <h1>Order details for order #{{$order->id}}</h1>
         <div class="col-3">
-            <form method="POST" name="all-forms" action="/order-management/save">
+            <form method="POST" class="all-forms" action="/order-management/save">
                 @csrf
 {{--                id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email--}}
                 <input class="form-control" name="id" id="id" type="hidden" value="{{$order->id}}">
@@ -66,13 +66,9 @@
                     </div>
                 </div>
             @foreach($details as $detail)
-                <form method="POST" name="all-forms" action="/order-management/order-details/save">
+                <form method="POST" class="all-forms" action="/order-management/order-details/save">
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{$detail->id}}">
-                    <input type="hidden" name="product_id" id="product_id" value="{{$detail->product_id}}">
-                    <input type="hidden" name="product_color_id" id="product_color_id" value="{{$detail->product_color_id}}">
-                    <input type="hidden" name="product_size_id" id="product_size_id" value="{{$detail->product_size_id}}">
-                    <input type="hidden" name="tax" id="tax" value="{{$detail->tax}}">
                     <div class="row border rounded p-1 mb-1 d-flex align-items-center">
                         <div class="col-6 d-flex align-items-center">
                             {{$detail->product->name}}
@@ -97,7 +93,7 @@
                             200,00
                         </div>
                         <div class="col">
-                            <button type="button" class="btn btn-outline-danger btn-delete">
+                            <button type="button" value="{{$detail->id}}" class="btn btn-outline-danger btn-delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
@@ -113,7 +109,17 @@
 </div>
 
 <script>
+    $.ajaxSetup({
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        }
+    });
+
+    var deleted = [];
+
     $(".btn-delete").click(function (){
+        deleted.push($(this).val())
+        console.log(deleted)
         var form = $(this).parents('form')
         $(form).hide(250, function (){
             $(form).remove();
@@ -121,25 +127,53 @@
     })
 
     $(".btn-save").click(function (){
-        $.ajax({
-            method: "POST",
-            url: "/order-management/save",
-            data: {id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email}
-        }).done(function (data){
-            console.log(data)
-            $("#spinner-back").removeClass('show')
-            $("#spinner-front").removeClass('show')
-        })
+        $("#spinner-back").addClass('show')
+        $("#spinner-front").addClass('show')
 
-
-        $('all-forms').each(function(){
-            valuesToSend = $(this).serialize();
-            $.ajax($(this).attr('action'),
-                {
-                    method: $(this).attr('method'),
-                    data: valuesToSend
-                }
-            )
-        });
+        if(deleted.length === 0)
+        {
+            $('.all-forms').each(function(){
+                valuesToSend = $(this).serialize();
+                $.ajax($(this).attr('action'),
+                    {
+                        method: $(this).attr('method'),
+                        data: valuesToSend
+                    }
+                ).done(function(data){
+                    if(data === 'SUCCESS'){
+                        $("#spinner-back").removeClass('show')
+                        $("#spinner-front").removeClass('show')
+                    }
+                })
+            })
+        }
+        else
+        {
+            $(deleted).each(function (index, value){
+                console.log(value)
+                $.ajax({
+                    method: "POST",
+                    url: "/order-management/order-details/delete",
+                    data: {id:value}
+                }).done(function (data){
+                    if(data === 'SUCCESS'){
+                        $('.all-forms').each(function(){
+                            valuesToSend = $(this).serialize();
+                            $.ajax($(this).attr('action'),
+                                {
+                                    method: $(this).attr('method'),
+                                    data: valuesToSend
+                                }
+                            ).done(function(data){
+                                if(data === 'SUCCESS'){
+                                    $("#spinner-back").removeClass('show')
+                                    $("#spinner-front").removeClass('show')
+                                }
+                            })
+                        })
+                    }
+                })
+            })
+        }
     })
 </script>
