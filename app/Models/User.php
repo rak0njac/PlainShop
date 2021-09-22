@@ -29,10 +29,15 @@ use Illuminate\Notifications\Notifiable;
  * @method static \Illuminate\Database\Eloquent\Builder|User whereType($value)
  * @method static \Illuminate\Database\Eloquent\Builder|User whereUsername($value)
  * @mixin \Eloquent
+ * @property int $password_change_required
+ * @method static \Illuminate\Database\Eloquent\Builder|User wherePasswordChangeRequired($value)
  */
 class User extends Authenticatable
 {
     use HasFactory, Notifiable;
+
+    public $timestamps = false;
+
 
     /**
      * The attributes that are mass assignable.

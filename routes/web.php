@@ -76,3 +76,17 @@ Route::get("/order-management/order-details/{orderId}", [OrderController::class,
 Route::post('/order-management/order-details/save', [OrderController::class, 'saveDetail']);
 
 Route::post('/order-management/order-details/delete', [OrderController::class, 'deleteDetail']);
+
+Route::any("/agent-management/add", [AgentController::class, 'add']);
+
+Route::post('/agent-management/save', [AgentController::class, 'save']);
+
+Route::post('/agent-management/delete', [AgentController::class, 'delete']);
+
+Route::post('/agent-management/search', [AgentController::class, 'search']);
+
+Route::any("/admin/change-password", [LoginController::class, 'changePassword']);
+
+Route::get('/agent', function (){
+    return view('agent');
+})->middleware('auth');

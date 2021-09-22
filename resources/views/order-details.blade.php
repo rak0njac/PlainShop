@@ -19,7 +19,7 @@
                 <label for="tracking_nr">Tracking</label>
                 <input class="form-control" name="tracking_nr" id="tracking_nr" type="text" value="{{$order->tracking_nr}}">
                 <label for="status">Status</label>
-                <select class="form-select" name="status" id="status" type="text" value="{{$order->status}}">
+                <select class="form-select" name="status" id="status" data-selected="{{$order->status}}">
                     <option value="New">
                         New
                     </option>
@@ -109,6 +109,12 @@
 </div>
 
 <script>
+    $(document).ready(function (){
+        var element = $("#status")
+        var value = $(element).data("selected")
+        $(element).children("option[value='" + value + "']").attr("selected", "selected")
+    })
+
     $.ajaxSetup({
         headers: {
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')

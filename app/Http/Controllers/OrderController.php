@@ -15,11 +15,13 @@ class OrderController extends Controller
         $order->customer_address = $request->input('customer_address');
         $order->customer_phone = $request->input('customer_phone');
         $order->customer_email = $request->input('customer_email');
+        $order->tracking_nr = $request->input('tracking_nr');
+        $order->status = $request->input('status');
 
-        if(!empty($request->input('tracking_nr')))
-            $order->tracking_nr = $request->input('tracking_nr');
-        if(!empty($request->input('status')))
-            $order->status = $request->input('status');
+//        if(!empty($request->input('tracking_nr')))
+//            $order->tracking_nr = $request->input('tracking_nr');
+//        if(!empty($request->input('status')))
+//            $order->status = $request->input('status');
 
 
         $order->save();

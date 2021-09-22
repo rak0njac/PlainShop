@@ -14,8 +14,8 @@
             @endif
             {{Form::open(array('url'=>'login'))}}
                 <div class="form-group">
-                    {{Form::label('user', 'Username', array('class'=>'form-label'))}}
-                    {{Form::text('user', null, array('class'=>'form-control', 'placeholder'=>'Username'))}}
+                    {{Form::label('email', 'Email', array('class'=>'form-label'))}}
+                    {{Form::text('email', null, array('class'=>'form-control', 'placeholder'=>'Email'))}}
 
                 </div>
                 <div class="form-group">

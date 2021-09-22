@@ -89,8 +89,35 @@
                         <td><input  class="form-control customer_address" type="text" value="{{$order->customer_address}}"></td>
                         <td style="width: 150px"><input  class="form-control customer_phone" type="text" value="{{$order->customer_phone}}"></td>
                         <td><input class="form-control customer_email" type="text" value="{{$order->customer_email}}"></td>
-                        <td  style="width: 100px">{{$order->status}}</td>
-                        <td  style="width: 200px">{{$order->tracking_nr}}</td>
+                        <td  style="width: 100px">
+                            <select class="form-select status" data-selected="{{$order->status}}">
+                                <option value="New">
+                                    New
+                                </option>
+                                <option value="Waiting for stock">
+                                    Waiting for stock
+                                </option>
+                                <option value="Sent">
+                                    Sent
+                                </option>
+                                <option value="Deleted">
+                                    Deleted
+                                </option>
+                                <option value="Rejected">
+                                    Rejected
+                                </option>
+                                <option value="Problem">
+                                    Problem
+                                </option>
+                                <option value="Returned - Exchange">
+                                    Returned - Exchange
+                                </option>
+                                <option value="Returned - Refund">
+                                    Returned - Refund
+                                </option>
+                            </select>
+                        </td>
+                        <td  style="width: 200px"><input class="form-control tracking_nr" type="text" value="{{$order->tracking_nr}}"></td>
                         <td style="width: 100px">{{$order->datetime}}</td>
                         <td  style="width: 100px">{{$order->subtotal_price}}</td>
                         <td style="width: 100px"><button type="button" class="btn btn-primary btn-save">
@@ -131,6 +158,13 @@
             'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
         }
     });
+
+    $(document).ready(function (){
+       $(".status").each(function (index, element){
+           var value = $(element).data("selected")
+           $(element).children("option[value='" + value + "']").attr("selected", "selected")
+       })
+    })
 
     $('.btn-save').click(function (){
         $("#spinner-back").addClass('show')
@@ -216,11 +250,13 @@
         var customer_address = $(row).find('.customer_address').val()
         var customer_phone = $(row).find('.customer_phone').val()
         var customer_email = $(row).find('.customer_email').val()
+        var tracking_nr = $(row).find('.tracking_nr').val()
+        var status = $(row).find('.status').val()
 
         $.ajax({
             method: "POST",
             url: "/order-management/save",
-            data: {id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email}
+            data: {id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email,tracking_nr:tracking_nr,status:status}
         }).done(function (data){
             console.log(data)
             $("#spinner-back").removeClass('show')
