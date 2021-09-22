@@ -58,6 +58,11 @@ class ProductController extends Controller
         return view('change-product-thumbnail', ['product'=>$product]);
     }
 
+    public function getProductColorsView($productid){
+        $product = Product::whereId($productid)->first();
+        return view('product-colors', ['product'=>$product]);
+    }
+
     public function changeProductThumbnail(Request $request)
     {
         $product = Product::whereId($request->input('product'))->first();

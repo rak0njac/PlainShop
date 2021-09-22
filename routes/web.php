@@ -90,3 +90,5 @@ Route::any("/admin/change-password", [LoginController::class, 'changePassword'])
 Route::get('/agent', function (){
     return view('agent');
 })->middleware('auth');
+
+Route::get("/product-management/product-colors/{productId}", [ProductController::class, 'getProductColorsView']);
