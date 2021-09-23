@@ -4,35 +4,29 @@
     <div class="row">
         <div class="col">
             <a class="btn btn-warning btn-sm mb-2" href="/product-management">Back to product management</a>
-            <h1>Product colors for {{$product->name}}</h1>
+            <h1>Product sizes for {{$product->name}}</h1>
             <div class="border rounded p-3">
-                Add new color
+                Add new size
                 <a href="https://g.co/kgs/kjhy2w"></a>
                 <form method="POST" action="add">
                     @csrf
                     <input type="hidden" name="product" value="{{$product->id}}">
-                    <label class="form-label" for="hex">Hex</label>
-                    <input type="text" id="hex" name="hex" class="form-control">
+                    <label class="form-label" for="size">Size</label>
+                    <input type="text" id="size" name="size" class="form-control">
                     <input type="submit" class="btn btn-primary">
                 </form>
             </div>
             <table class="table">
                 <thead>
                 <tr>
-                    <th>Color</th>
-                    <th>Hex</th>
+                    <th>Size</th>
                     <th></th>
                 </tr>
                 </thead>
                 <tbody class="body">
-                @foreach($product->colors as $color)
-                    <tr data-id="{{$color->id}}">
-                        <td>
-                            <label class="color-label ms-2">
-                                <span class="color-span" style="background: #{{$color->hex}};"></span>
-                            </label>
-                        </td>
-                        <td>{{$color->hex}}</td>
+                @foreach($product->sizes as $size)
+                    <tr data-id="{{$size->id}}">
+                        <td>{{$size->name}}</td>
                         <td style="width: 110px">
                             <button type="button" class="btn btn-outline-danger btn-delete">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
@@ -81,7 +75,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/product-management/product-colors/delete",
+            url: "/product-management/product-sizes/delete",
             data: {id:id}
         }).done(function (data){
             console.log(data)

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\CartDetail;
 use App\Models\Product;
 use App\Models\ProductColor;
+use App\Models\ProductSize;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\View;
@@ -61,6 +62,11 @@ class ProductController extends Controller
     public function getProductColorsView($productid){
         $product = Product::whereId($productid)->first();
         return view('product-colors', ['product'=>$product]);
+    }
+
+    public function getProductSizesView($productid){
+        $product = Product::whereId($productid)->first();
+        return view('product-sizes', ['product'=>$product]);
     }
 
     public function changeProductThumbnail(Request $request)
@@ -134,4 +140,37 @@ class ProductController extends Controller
         }
     }
 
+    public function addColor(Request $request)
+    {
+        $color = new ProductColor();
+        $color->product_id = $request->input("product");
+        $color->hex = $request->input("hex");
+        $color->save();
+
+        return redirect()->action([ProductController::class, 'getProductColorsView'], ['productId'=>$request->input("product")]);
+    }
+
+    public function deleteColor(Request $request)
+    {
+        $color = ProductColor::whereId($request->input('id'))->first();
+        $color->delete();
+        return 'SUCCESS';
+    }
+
+    public function addSize(Request $request)
+    {
+        $size = new ProductSize();
+        $size->product_id = $request->input("product");
+        $size->name = $request->input("size");
+        $size->save();
+
+        return redirect()->action([ProductController::class, 'getProductSizesView'], ['productId'=>$request->input("product")]);
+    }
+
+    public function deleteSize(Request $request)
+    {
+        $size = ProductSize::whereId($request->input('id'))->first();
+        $size->delete();
+        return 'SUCCESS';
+    }
 }

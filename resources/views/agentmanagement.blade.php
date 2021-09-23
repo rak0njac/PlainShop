@@ -3,6 +3,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
+            <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
             <h1>Agent management</h1>
             <div class="border rounded p-3 mb-3">
                 <a class="btn btn-primary" href="/agent-management/add">Add new agent</a>

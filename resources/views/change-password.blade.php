@@ -3,6 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
+            <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
             <h1>Change password</h1>
             <form method="POST" action="change-password">
                 @csrf

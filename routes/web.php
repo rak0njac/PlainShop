@@ -92,3 +92,13 @@ Route::get('/agent', function (){
 })->middleware('auth');
 
 Route::get("/product-management/product-colors/{productId}", [ProductController::class, 'getProductColorsView']);
+
+Route::post("/product-management/product-colors/add", [ProductController::class, 'addColor']);
+
+Route::post("/product-management/product-colors/delete", [ProductController::class, 'deleteColor']);
+
+Route::get("/product-management/product-sizes/{productId}", [ProductController::class, 'getProductSizesView']);
+
+Route::post("/product-management/product-sizes/add", [ProductController::class, 'addSize']);
+
+Route::post("/product-management/product-sizes/delete", [ProductController::class, 'deleteSize']);

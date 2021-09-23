@@ -2,6 +2,7 @@
 
 <div class="container">
     <div class="row">
+        <a class="btn btn-warning btn-sm mb-2" href="/order-management">Back to order management</a>
         <h1>Order details for order #{{$order->id}}</h1>
         <div class="col-3">
             <form method="POST" class="all-forms" action="/order-management/save">
