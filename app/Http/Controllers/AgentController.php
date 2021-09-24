@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Order;
 use App\Models\User;
+use Hash;
 use Illuminate\Http\Request;
 
 class AgentController extends Controller
@@ -23,6 +24,7 @@ class AgentController extends Controller
             $agent->email = $request->input("email");
             $agent->name = $request->input("name");
             $agent->username = "TEST";
+            $agent->password = Hash::make("");
             $agent->type = "agent";
             $agent->password_change_required = 1;
 

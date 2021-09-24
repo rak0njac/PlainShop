@@ -12,12 +12,11 @@
                     </ul>
                 </div>
             @endif
-            <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
-            <h1>Change password</h1>
-            <form method="POST" action="/change-password">
+            <h1>Set first password</h1>
+            Welcome to PlainShop agent. Since this is your first time logging in, you need to set your password.
+            <form method="POST" action="/set-first-password">
                 @csrf
-                <label for="old">Old (current) password</label>
-                <input class="form-control" name="old" id="old" type="password">
+                <input type="hidden" name="agent" value="{{$agent->id}}">
                 <label for="new">New password</label>
                 <input class="form-control" name="new" id="new" type="password">
                 <label for="new-confirm">Confirm new password</label>

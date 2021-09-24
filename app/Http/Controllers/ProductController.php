@@ -69,6 +69,21 @@ class ProductController extends Controller
         return view('product-sizes', ['product'=>$product]);
     }
 
+    public function getColors($productid){
+        $product = Product::whereId($productid)->first();
+        return json_encode($product->colors);
+    }
+
+    public function getSizes($productid){
+        $product = Product::whereId($productid)->first();
+        return json_encode($product->sizes);
+    }
+
+    public function getPrice($productid){
+        $product = Product::whereId($productid)->first();
+        return $product->price;
+    }
+
     public function changeProductThumbnail(Request $request)
     {
         $product = Product::whereId($request->input('product'))->first();

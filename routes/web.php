@@ -85,7 +85,7 @@ Route::post('/agent-management/delete', [AgentController::class, 'delete']);
 
 Route::post('/agent-management/search', [AgentController::class, 'search']);
 
-Route::any("/admin/change-password", [LoginController::class, 'changePassword']);
+Route::any("/change-password", [LoginController::class, 'changePassword']);
 
 Route::get('/agent', function (){
     return view('agent');
@@ -102,3 +102,13 @@ Route::get("/product-management/product-sizes/{productId}", [ProductController::
 Route::post("/product-management/product-sizes/add", [ProductController::class, 'addSize']);
 
 Route::post("/product-management/product-sizes/delete", [ProductController::class, 'deleteSize']);
+
+Route::get("/agent/new-order", [OrderController::class, 'getNewOrderView']);
+
+Route::get("/order-management/new-order/get-colors/{productId}", [ProductController::class, 'getColors']);
+
+Route::get("/order-management/new-order/get-sizes/{productId}", [ProductController::class, 'getSizes']);
+
+Route::get("/order-management/new-order/get-price/{productId}", [ProductController::class, 'getPrice']);
+
+Route::post("/set-first-password", [LoginController::class, 'setFirstPassword']);

@@ -1,7 +1,5 @@
 AGENT:
 
--add create order view and controller
--add password_change_required column in db and a required mechanism for newly added agents to change their passwords
 -set up authorization guards
 
 CUSTOMER:
@@ -36,9 +34,11 @@ MANAGER:
 AGENT:
 
 -add agent panel with create order, change password and logout buttons
-
+-add create order view and controller --NOTES: ADD PRODUCT COLOR STYLES, VALIDATION AND TOTAL PRICE CALCULATION
+-add a required mechanism for newly added agents to change their passwords --NOTES: ADD VALIDATION
 
 How could you improve your application?
 -Track agents' performance by adding a created_by fk column in orders db table (NULL if order created by visitor).
 -Merge product color and size management.
 -In product color and size management, allow values to be edited directly in the table instead of having to delete and recreate.
+-Add product stock mechanism
