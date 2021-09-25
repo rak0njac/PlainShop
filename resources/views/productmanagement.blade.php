@@ -6,7 +6,7 @@
             <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
             <h1>Product management</h1>
             <div class="border rounded p-3 mb-3">
-                <a class="btn btn-primary" href="/product-management/add">Add new product</a>
+                <a class="btn btn-primary" href="add">Add new product</a>
             </div>
             <div class="border rounded p-3 mb-3">
                 <h4>Search</h4>
@@ -56,7 +56,7 @@
                         <td style="width: 150px">
                                 <img style="border-width: 1px; border-style: solid" width="40px" src="/storage/{{$product->avatar_url}}">
                             <span>
-                            <a style="text-decoration: none" href="/product-management/edit-thumbnail/{{$product->id}}">Change</a>
+                            <a style="text-decoration: none" href="edit-thumbnail/{{$product->id}}">Change</a>
                             </span>
                         </td>
                         <td style="width: 100px">
@@ -66,7 +66,7 @@
                             </select>
                         </td>
                         <td style="width: 110px">
-                            <a href="/product-management/product-colors/{{$product->id}}" class="btn btn-warning btn-colors">
+                            <a href="product-management/product-colors/{{$product->id}}" class="btn btn-warning btn-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
@@ -75,7 +75,7 @@
                             </a>
                         </td>
                         <td style="width: 110px">
-                            <a href="/product-management/product-sizes/{{$product->id}}" class="btn btn-info btn-colors">
+                            <a href="product-management/product-sizes/{{$product->id}}" class="btn btn-info btn-colors">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
                                     <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"></path>
                                     <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"></path>
@@ -140,7 +140,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/product-management/search",
+            url: "/admin/product-management/search",
             data: {sku:sku,name:name,shortname:shortname}
         }).done(function (data){
             console.log(data)
@@ -155,7 +155,7 @@
                     <td style='width: 150px'>\
                         <img style='border-width: 1px; border-style: solid' width='40px' src='/storage/" + key.avatar_url + "'>\
                             <span>\
-                            <a style='text-decoration: none' href='/product-management/edit-thumbnail/" + key.id + "'>Change</a>\
+                            <a style='text-decoration: none' href='edit-thumbnail/" + key.id + "'>Change</a>\
                             </span>\
                     </td>\
                     <td style='width: 100px'>\
@@ -200,7 +200,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/product-management/save",
+            url: "/admin/product-management/save",
             data: {id:id, SKU:SKU,name:name,short_name:short_name,price:price,fake_price:fake_price,hidden:hidden}
         }).done(function (data){
             console.log(data)
@@ -215,7 +215,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/product-management/delete",
+            url: "/admin/product-management/delete",
             data: {id:id}
         }).done(function (data){
             console.log(data)

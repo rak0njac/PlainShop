@@ -6,7 +6,7 @@
             <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
             <h1>Agent management</h1>
             <div class="border rounded p-3 mb-3">
-                <a class="btn btn-primary" href="/agent-management/add">Add new agent</a>
+                <a class="btn btn-primary" href="add">Add new agent</a>
             </div>
             <div class="border rounded p-3 mb-3">
                 <h4>Search</h4>
@@ -93,7 +93,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/agent-management/save",
+            url: "/admin/agent-management/save",
             data: {id:id, email:email,name:name}
         }).done(function (data){
             console.log(data)
@@ -108,7 +108,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/agent-management/delete",
+            url: "/admin/agent-management/delete",
             data: {id:id}
         }).done(function (data){
             console.log(data)
@@ -127,7 +127,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/agent-management/search",
+            url: "/admin/agent-management/search",
             data: {name:name,email:email}
         }).done(function (data) {
             console.log(data)

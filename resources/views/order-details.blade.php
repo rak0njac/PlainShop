@@ -2,10 +2,10 @@
 
 <div class="container">
     <div class="row">
-        <a class="btn btn-warning btn-sm mb-2" href="/order-management">Back to order management</a>
+        <a class="btn btn-warning btn-sm mb-2" href="/{{Auth::user()->type}}/order-management">Back to order management</a>
         <h1>Order details for order #{{$order->id}}</h1>
         <div class="col-3">
-            <form method="POST" class="all-forms" action="/order-management/save">
+            <form method="POST" class="all-forms" action="/{{Auth::user()->type}}/order-management/save">
                 @csrf
 {{--                id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email--}}
                 <input class="form-control" name="id" id="id" type="hidden" value="{{$order->id}}">
@@ -67,7 +67,7 @@
                     </div>
                 </div>
             @foreach($details as $detail)
-                <form method="POST" class="all-forms" action="/order-management/order-details/save">
+                <form method="POST" class="all-forms" action="/{{Auth::user()->type}}/order-management/order-details/save">
                     @csrf
                     <input type="hidden" name="id" id="id" value="{{$detail->id}}">
                     <div class="row border rounded p-1 mb-1 d-flex align-items-center">
@@ -160,7 +160,7 @@
                 console.log(value)
                 $.ajax({
                     method: "POST",
-                    url: "/order-management/order-details/delete",
+                    url: "/{{Auth::user()->type}}/order-management/order-details/delete",
                     data: {id:value}
                 }).done(function (data){
                     if(data === 'SUCCESS'){

@@ -14,7 +14,7 @@
             @endif
             <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
             <h1>Change password</h1>
-            <form method="POST" action="/change-password">
+            <form method="POST" action="change-password">
                 @csrf
                 <label for="old">Old (current) password</label>
                 <input class="form-control" name="old" id="old" type="password">

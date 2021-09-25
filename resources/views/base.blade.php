@@ -30,7 +30,7 @@
         </a>
     </div>
     @auth
-        <h1 style="color: white">AUTHENTICATED</h1>
+        <h1 style="color: white">{{Auth::user()->type}}</h1>
     @else
         <h1 style="color: white">NOT AUTHENTICATED</h1>
     @endauth

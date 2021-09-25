@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <a class="btn btn-warning btn-sm mb-2" href="/product-management">Back to product management</a>
+            <a class="btn btn-warning btn-sm mb-2" href="/admin/product-management">Back to product management</a>
             <h1>New product</h1>
             <form method="POST" action="add" enctype="multipart/form-data">
                 @csrf

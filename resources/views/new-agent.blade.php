@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <a class="btn btn-warning btn-sm mb-2" href="/agent-management">Back to agent management</a>
+            <a class="btn btn-warning btn-sm mb-2" href="/admin/agent-management">Back to agent management</a>
             <h1>New agent</h1>
             <form method="POST" action="add">
                 @csrf

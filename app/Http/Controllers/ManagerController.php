@@ -22,7 +22,9 @@ class ManagerController extends AgentController
         return view('productmanagement', ['products'=>$products]);
     }
 
-
+    public function getAdminDashboard(){
+        return view('manager');
+    }
 
     public function findAgent(Request $request){}
     public function findProduct(Request $request){}

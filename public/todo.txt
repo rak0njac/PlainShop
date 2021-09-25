@@ -1,7 +1,3 @@
-AGENT:
-
--set up authorization guards
-
 CUSTOMER:
 
 -add total price calculation on order form view
@@ -36,6 +32,10 @@ AGENT:
 -add agent panel with create order, change password and logout buttons
 -add create order view and controller --NOTES: ADD PRODUCT COLOR STYLES, VALIDATION AND TOTAL PRICE CALCULATION
 -add a required mechanism for newly added agents to change their passwords --NOTES: ADD VALIDATION
+-set up authorization guards
+
+
+
 
 How could you improve your application?
 -Track agents' performance by adding a created_by fk column in orders db table (NULL if order created by visitor).

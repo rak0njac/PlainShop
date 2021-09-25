@@ -14,7 +14,7 @@
             @endif
             <h1>Set first password</h1>
             Welcome to PlainShop agent. Since this is your first time logging in, you need to set your password.
-            <form method="POST" action="/set-first-password">
+            <form method="POST" action="/agent/set-first-password">
                 @csrf
                 <input type="hidden" name="agent" value="{{$agent->id}}">
                 <label for="new">New password</label>

@@ -2,10 +2,10 @@
 
 <div class="container">
     <div class="row">
-        <a class="btn btn-warning btn-sm mb-2" href="/agent">Back to agent panel</a>
+        <a class="btn btn-warning btn-sm mb-2" href="/{{Auth::user()->type}}">Back to dashboard</a>
         <h1>New order</h1>
         <div class="col-3">
-            <form method="POST" class="order-form" action="/order-management/save">
+            <form method="POST" class="order-form" action="/{{Auth::user()->type}}/order-management/save">
                 @csrf
 {{--                id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email--}}
                 <label for="customer_name">Customer</label>
@@ -43,7 +43,7 @@
                     </div>
                 </div>
             <div class="forms">
-                <form method="POST" style="display: none" class="form-dummy" action="/order-management/order-details/save">
+                <form method="POST" style="display: none" class="form-dummy" action="/{{Auth::user()->type}}/order-management/order-details/save">
                     @csrf
                     <div class="row border rounded p-1 mb-1 d-flex align-items-center">
                         <div class="col-4">
@@ -84,7 +84,7 @@
                     </div>
                 </form>
 
-                <form method="POST" class="detail-forms" action="/order-management/order-details/save">
+                <form method="POST" class="detail-forms" action="/{{Auth::user()->type}}/order-management/order-details/save">
                     @csrf
                     <div class="row border rounded p-1 mb-1 d-flex align-items-center">
                         <div class="col-4">
@@ -156,7 +156,7 @@
         var row = $(this).parents("form")
         $.ajax({
             method: "GET",
-            url: "/order-management/new-order/get-colors/" + product_id,
+            url: "/{{Auth::user()->type}}/new-order/get-colors/" + product_id,
         }).done(function (data){
             $(row).find(".color").empty()
             console.log(data)
@@ -165,7 +165,7 @@
             })
             $.ajax({
                 method: "GET",
-                url: "/order-management/new-order/get-sizes/" + product_id,
+                url: "/{{Auth::user()->type}}/new-order/get-sizes/" + product_id,
             }).done(function (data){
                 $(row).find(".size").empty()
                 console.log(data)
@@ -174,7 +174,7 @@
                 })
                 $.ajax({
                     method: "GET",
-                    url: "/order-management/new-order/get-price/" + product_id,
+                    url: "/{{Auth::user()->type}}/new-order/get-price/" + product_id,
                 }).done(function (data){
                     $(row).find(".price_after_tax").val(data)
                     console.log(data)

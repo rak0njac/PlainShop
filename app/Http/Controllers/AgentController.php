@@ -63,6 +63,11 @@ class AgentController extends Controller
         return $agents;
     }
 
+    public function getAgentDashboard(){
+        return view('agent');
+    }
+
+
     public function findOrder(Request $request){}
     public function addOrder(Request $request){}
     public function updateOrder(Request $request){}

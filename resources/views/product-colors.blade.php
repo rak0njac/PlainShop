@@ -3,7 +3,7 @@
 <div class="container">
     <div class="row">
         <div class="col">
-            <a class="btn btn-warning btn-sm mb-2" href="/product-management">Back to product management</a>
+            <a class="btn btn-warning btn-sm mb-2" href="/admin/product-management">Back to product management</a>
             <h1>Product colors for {{$product->name}}</h1>
             <div class="border rounded p-3">
                 Add new color
@@ -81,7 +81,7 @@
 
         $.ajax({
             method: "POST",
-            url: "/product-management/product-colors/delete",
+            url: "/admin/product-management/product-colors/delete",
             data: {id:id}
         }).done(function (data){
             console.log(data)
