@@ -48,12 +48,32 @@
             </div>
         </form>
     </div>
-    <div class="col d-flex justify-content-end me-3">
-        <a href="/cart" class="d-flex align-items-center text-decoration-none">
-            <img style="margin-left: 10px; margin-right: 10px;" src="/img/cart.png" width="50px" height="50px">
-            <span style="color: white; font-size: 24px;">Cart</span>
-        </a>
-    </div>
+
+        <div class="col d-flex justify-content-end me-3">
+            @if(Cookie::has('cart'))
+            <a href="/cart" class="d-flex align-items-center text-decoration-none">
+                <img style="margin-left: 10px; margin-right: 10px;" src="/img/cart.png" width="50px" height="50px">
+                <span style="color: white; font-size: 24px;">Cart ({{ \App\Models\Cart::whereId(Cookie::get('cart'))->first()->details->count() }})</span>
+            </a>
+            @endif
+        </div>
+
+
+
+
+{{--    if(!Cookie::has('cart'))--}}
+{{--    {--}}
+{{--    return print_r('No cookie set');--}}
+{{--    }--}}
+{{--    else {--}}
+{{--    $cartId =  Cookie::get('cart');--}}
+{{--    $cart = Cart::whereId($cartId)->first();--}}
+{{--    }--}}
+
+{{--    return view('cart', ['cart'=>$cart]);--}}
+
+
+
 </nav>
 
 

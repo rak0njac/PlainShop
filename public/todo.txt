@@ -1,7 +1,6 @@
 CUSTOMER:
 
 -add total price calculation on order form view
--add number of products next to "Cart" text in navbar (and prevent from clicking if 0 products in cart)
 
 GENERAL:
 
@@ -34,6 +33,9 @@ AGENT:
 -add a required mechanism for newly added agents to change their passwords --NOTES: ADD VALIDATION
 -set up authorization guards
 
+CUSTOMER:
+
+-add number of products next to "Cart" text in navbar (and prevent from clicking if 0 products in cart)
 
 
 
