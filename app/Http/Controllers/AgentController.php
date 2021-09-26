@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\User;
 use Hash;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rules\Password;
 
 class AgentController extends Controller
 {
@@ -19,7 +20,12 @@ class AgentController extends Controller
         if($request->isMethod('get')){
             return view('new-agent');
         }
-        else {
+        $request->validate([
+            'email'=>'required|email',
+            'name'=>'required|max:50',
+            'password' => ['required', Password::min(8)->numbers()],
+        ]);
+
             $agent = new User();
             $agent->email = $request->input("email");
             $agent->name = $request->input("name");
@@ -31,11 +37,16 @@ class AgentController extends Controller
             $agent->save();
             return redirect()->action([ManagerController::class, 'getAllAgents']);
 
-        }
+
     }
 
     public function save(Request $request)
     {
+        $request->validate([
+            'email'=>'required|email',
+            'name'=>'required|max:50',
+        ]);
+
         $agent = User::whereId($request->input('id'))->first();
         $agent->name = $request->input('name');
         $agent->email = $request->input('email');
@@ -52,6 +63,7 @@ class AgentController extends Controller
 
     public function search(Request $request)
     {
+
         $name = $request->input('name');
         $email = $request->input('email');
 

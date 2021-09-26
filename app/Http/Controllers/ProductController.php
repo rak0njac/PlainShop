@@ -30,19 +30,15 @@ class ProductController extends Controller
     {
         $cartDetailId = $request->input('cookie_id');
         $cartDetail = CartDetail::whereId($cartDetailId)->first();
-        //$cart = $_COOKIE['cart'];
-//        $productsInCart = json_decode($cart, true);
-//        $productsInCart = array_values($productsInCart);
-//        unset($productsInCart[$cookieid]);
-//
-//        $cart = json_encode($productsInCart);
-//        setcookie('cart', $cart, time() + (60*60*24*7));
         $cartDetail->forceDelete();
-
     }
 
     public function cartChangeQuantity(Request $request)
     {
+        $request->validate([
+            'quantity'=>'required|min:1|max:99',
+        ]);
+
         $cartDetailId = $request->input('cookie_id');
         $quantity = $request->input('quantity');
         $cartDetail = CartDetail::whereId($cartDetailId)->first();
@@ -86,22 +82,26 @@ class ProductController extends Controller
 
     public function changeProductThumbnail(Request $request)
     {
+        $request->validate([
+            'file'=>'mimes:jpg,bmp,png,webp|max:5120',
+        ]);
+
         $product = Product::whereId($request->input('product'))->first();
-        if($request->file('file')->extension() == 'jpg' ||
-            $request->file('file')->extension() == 'bmp' ||
-            $request->file('file')->extension() == 'png' ||
-            $request->file('file')->extension() == 'webp')
-        {
             $file = $request->file('file')->store('product-thumbnails', ['disk'=>'public']);
             $product->avatar_url = $file;
             $product->save();
             return redirect()->action([ProductController::class, 'getChangeProductThumbnailView'], ['productid'=>$product->id]);
-        }
-        else echo 'File extension must be jpg/bmp/png/webp';
     }
 
     public function save(Request $request)
     {
+        $request->validate([
+            'SKU'=>'required|max:50',
+            'name'=>'required|max:150',
+            'short_name'=>'required|max:50',
+            'hidden'=>'required',
+        ]);
+
         $product = Product::whereId($request->input('id'))->first();
         $product->SKU = $request->input('SKU');
         $product->name = $request->input('name');
@@ -139,7 +139,15 @@ class ProductController extends Controller
         if($request->isMethod('get')){
             return view('new-product');
         }
-        else {
+        $request->validate([
+            'SKU'=>'required|max:50',
+            'name'=>'required|max:150',
+            'short_name'=>'required|max:50',
+            'thumbnail'=>'mimes:jpg,bmp,png,webp|max:5120',
+            'hidden'=>'required',
+        ]);
+
+
             $product = new Product();
             $product->SKU = $request->input('sku');
             $product->name = $request->input('name');
@@ -152,11 +160,15 @@ class ProductController extends Controller
             $product->save();
             return redirect()->action([ManagerController::class, 'getAllProducts']);
 
-        }
+
     }
 
     public function addColor(Request $request)
     {
+        $request->validate([
+            'hex'=>'required|size:6',
+        ]);
+
         $color = new ProductColor();
         $color->product_id = $request->input("product");
         $color->hex = $request->input("hex");
@@ -174,6 +186,10 @@ class ProductController extends Controller
 
     public function addSize(Request $request)
     {
+        $request->validate([
+            'size'=>'required|max:20',
+        ]);
+
         $size = new ProductSize();
         $size->product_id = $request->input("product");
         $size->name = $request->input("size");

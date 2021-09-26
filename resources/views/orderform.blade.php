@@ -10,33 +10,33 @@
                     <div class="row">
                         <div class="mb-3">
                             {{Form::label('email', 'Email address', array('class'=>'form-label'))}}
-                            {{Form::email('email', null, array('class'=>'form-control'))}}
+                            {{Form::email('email', null, array('class'=>'form-control', 'maxlength'=>'50'))}}
                             <div id="emailHelp" class="form-text">We'll never share your email with anyone else.</div>
                         </div>
                         <div class="mb-3">
                             {{Form::label('phone', 'Phone number', array('class'=>'form-label'))}}
-                            {{Form::text('phone', null, array('class'=>'form-control'))}}
+                            {{Form::text('phone', null, array('class'=>'form-control', 'maxlength'=>'20'))}}
                             <div id="emailHelp" class="form-text">Only numbers are allowed. Example: 0982020400</div>
                         </div>
                         <div class="mb-3">
                             {{Form::label('name', 'Name and surname', array('class'=>'form-label'))}}
-                            {{Form::text('name', null, array('class'=>'form-control'))}}
+                            {{Form::text('name', null, array('class'=>'form-control', 'maxlength'=>'50'))}}
                             <div id="emailHelp" class="form-text">Write intercom surname if different.</div>
                         </div>
                         <div class="mb-3">
                             {{Form::label('address', 'Address line', array('class'=>'form-label'))}}
-                            {{Form::text('address', null, array('class'=>'form-control'))}}
+                            {{Form::text('address', null, array('class'=>'form-control', 'maxlength'=>'50'))}}
                             <div id="addressHelp" class="form-text">Write 'N/A' as house number if none.</div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-3 mb-3">
                             {{Form::label('postcode', 'Post code', array('class'=>'form-label'))}}
-                            {{Form::text('postcode', null, array('class'=>'form-control'))}}
+                            {{Form::text('postcode', null, array('class'=>'form-control', 'maxlength'=>'5'))}}
                         </div>
                         <div class="col-9 mb-3">
                             {{Form::label('town', 'Town/city', array('class'=>'form-label'))}}
-                            {{Form::text('town', null, array('class'=>'form-control'))}}
+                            {{Form::text('town', null, array('class'=>'form-control', 'maxlength'=>'50'))}}
                         </div>
                     </div>
                     <div class="row">
@@ -51,9 +51,9 @@
                     Cart contents:
                     <table class="table table-bordered mt-3">
                         <tbody>
-                        @foreach($products as $product)
+                        @foreach($cart->details as $detail)
                             <tr>
-                                <td>{{$product[5]}}x {{$product[1]}}</td>
+                                <td>{{$detail->qty}}x {{$detail->product->name}}</td>
                                 <td>Total</td>
                             </tr>
                         @endforeach

@@ -12,7 +12,7 @@
                     @csrf
                     <input type="hidden" name="product" value="{{$product->id}}">
                     <label class="form-label" for="size">Size</label>
-                    <input type="text" id="size" name="size" class="form-control">
+                    <input type="text" id="size" name="size" maxlength="20" class="form-control">
                     <input type="submit" class="btn btn-primary">
                 </form>
             </div>

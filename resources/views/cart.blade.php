@@ -32,7 +32,7 @@
                                     </svg>
                                 </button>
                         </td>
-                        <td><img src="/img/avatars/{{$detail->product->avatar_url}}" width="50px" height="50px"></td>
+                        <td><img src="/storage/{{$detail->product->avatar_url}}" width="50px" height="50px"></td>
                         <td>
                             <div class="d-flex align-items-center">
                                 {{$detail->product->name}}

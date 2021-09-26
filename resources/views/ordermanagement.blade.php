@@ -3,7 +3,7 @@
 <div class="container-fluid">
     <div class="row">
         <div class="col">
-            <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
+            <a class="btn btn-warning btn-sm mb-2" href="/{{Auth::user()->type}}">Back to {{Auth::user()->type}} panel</a>
             <h1>Order management</h1>
             <div class="border rounded p-3 mb-3">
                 <h4>Search</h4>
@@ -11,23 +11,23 @@
 {{--                    -add search order by ID, customer, GSM, email, tracking NR--}}
                     <div>
                         <label for="search-id">ID</label>
-                        <input class="form-control me-5" type="text" id="search-id">
+                        <input class="form-control me-5" type="text" id="search-id" maxlength="20">
                     </div>
                     <div>
                         <label for="search-customer_name">Customer</label>
-                        <input class="form-control me-5" type="text" id="search-customer_name">
+                        <input class="form-control me-5" type="text" id="search-customer_name" maxlength="50">
                     </div>
                     <div>
                         <label for="search-customer_phone">GSM</label>
-                        <input class="form-control me-5" type="text" id="search-customer_phone">
+                        <input class="form-control me-5" type="text" id="search-customer_phone" maxlength="20">
                     </div>
                     <div>
                         <label for="search-customer_email">Email</label>
-                        <input class="form-control me-5" type="text" id="search-customer_email">
+                        <input class="form-control me-5" type="text" id="search-customer_email" maxlength="50">
                     </div>
                     <div>
                         <label for="search-tracking_nr">Tracking</label>
-                        <input class="form-control me-5" type="text" id="search-tracking_nr">
+                        <input class="form-control me-5" type="text" id="search-tracking_nr" maxlength="50">
                     </div>
                     <div>
                         <label for="search-status">Status</label>
@@ -86,10 +86,10 @@
                 @foreach($orders as $order)
                     <tr>
                         <td class="id" style="width: 150px">{{$order->id}}</td>
-                        <td><input class="form-control customer_name" type="text" value="{{$order->customer_name}}"></td>
-                        <td><input  class="form-control customer_address" type="text" value="{{$order->customer_address}}"></td>
-                        <td style="width: 150px"><input  class="form-control customer_phone" type="text" value="{{$order->customer_phone}}"></td>
-                        <td><input class="form-control customer_email" type="text" value="{{$order->customer_email}}"></td>
+                        <td><input class="form-control customer_name" type="text" value="{{$order->customer_name}}" maxlength="50"></td>
+                        <td><input  class="form-control customer_address" type="text" value="{{$order->customer_address}}" maxlength="50"></td>
+                        <td style="width: 150px"><input  class="form-control customer_phone" type="text" value="{{$order->customer_phone}}" maxlength="20"></td>
+                        <td><input class="form-control customer_email" type="text" value="{{$order->customer_email}}" maxlength="50"></td>
                         <td  style="width: 100px">
                             <select class="form-select status" data-selected="{{$order->status}}">
                                 <option value="New">
@@ -118,7 +118,7 @@
                                 </option>
                             </select>
                         </td>
-                        <td  style="width: 200px"><input class="form-control tracking_nr" type="text" value="{{$order->tracking_nr}}"></td>
+                        <td  style="width: 200px"><input class="form-control tracking_nr" type="text" value="{{$order->tracking_nr}}" maxlength="50"></td>
                         <td style="width: 100px">{{$order->datetime}}</td>
                         <td  style="width: 100px">{{$order->subtotal_price}}</td>
                         <td style="width: 100px"><button type="button" class="btn btn-primary btn-save">

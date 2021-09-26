@@ -6,18 +6,18 @@
             <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
             <h1>Agent management</h1>
             <div class="border rounded p-3 mb-3">
-                <a class="btn btn-primary" href="add">Add new agent</a>
+                <a class="btn btn-primary" href="agent-management/add">Add new agent</a>
             </div>
             <div class="border rounded p-3 mb-3">
                 <h4>Search</h4>
                 <div class="d-flex justify-content-between" >
                     <div>
                         <label for="search-email">Email</label>
-                        <input class="form-control me-5" type="text" id="search-email">
+                        <input class="form-control me-5" type="text" maxlength="50" id="search-email">
                     </div>
                     <div>
                         <label for="search-name">Name</label>
-                        <input class="form-control me-5" type="text" id="search-name">
+                        <input class="form-control me-5" type="text" maxlength="50" id="search-name">
                     </div>
 
                     <button class="btn btn-primary btn-search">Search</button>
@@ -36,8 +36,8 @@
                 <tbody class="body">
                 @foreach($agents as $agent)
                     <tr data-id="{{$agent->id}}">
-                        <td><input class="form-control" name="email" type="email" value="{{$agent->email}}"></td>
-                        <td><input  class="form-control" name="name" type="text" value="{{$agent->name}}"></td>
+                        <td><input class="form-control" name="email" type="email" maxlength="50" value="{{$agent->email}}"></td>
+                        <td><input  class="form-control" name="name" type="text" maxlength="50" value="{{$agent->name}}"></td>
                         <td style="width: 100px"><button type="button" class="btn btn-primary btn-save">
                                 <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-save" viewBox="0 0 16 16">
                                     <path d="M2 1a1 1 0 0 0-1 1v12a1 1 0 0 0 1 1h12a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H9.5a1 1 0 0 0-1 1v7.293l2.646-2.647a.5.5 0 0 1 .708.708l-3.5 3.5a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L7.5 9.293V2a2 2 0 0 1 2-2H14a2 2 0 0 1 2 2v12a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h2.5a.5.5 0 0 1 0 1H2z"></path>

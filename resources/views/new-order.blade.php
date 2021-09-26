@@ -9,13 +9,13 @@
                 @csrf
 {{--                id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email--}}
                 <label for="customer_name">Customer</label>
-                <input class="form-control" name="customer_name" id="customer_name" type="text">
+                <input class="form-control" name="customer_name" maxlength="50" id="customer_name" type="text">
                 <label for="customer_address">Address</label>
-                <input class="form-control" name="customer_address" id="customer_address" type="text">
+                <input class="form-control" name="customer_address" maxlength="50" id="customer_address" type="text">
                 <label for="customer_phone">GSM</label>
-                <input class="form-control" name="customer_phone" id="customer_phone" type="text">
+                <input class="form-control" name="customer_phone" maxlength="20" id="customer_phone" type="text">
                 <label for="customer_email">Email</label>
-                <input class="form-control" name="customer_email" id="customer_email" type="text">
+                <input class="form-control" name="customer_email" maxlength="50" id="customer_email" type="text">
             </form>
         </div>
         <div class="col-9 border rounded p-3">
@@ -65,7 +65,7 @@
                             </select>
                         </div>
                         <div class="col">
-                            <input type="number" name="qty" value="1" min="0" max="50" class="form-control qty">
+                            <input type="number" name="qty" value="1" min="1" max="99" class="form-control qty">
                         </div>
                         <div class="col">
                             <input type="text" name="price_after_tax" class="form-control price_after_tax">
@@ -106,7 +106,7 @@
                             </select>
                         </div>
                         <div class="col">
-                            <input type="number" name="qty" value="1" min="0" max="50" class="form-control qty">
+                            <input type="number" name="qty" value="1" min="1" max="99" class="form-control qty">
                         </div>
                         <div class="col">
                             <input type="text" name="price_after_tax" class="form-control price_after_tax">

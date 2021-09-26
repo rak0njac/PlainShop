@@ -6,24 +6,24 @@
             <a class="btn btn-warning btn-sm mb-2" href="/admin">Back to admin panel</a>
             <h1>Product management</h1>
             <div class="border rounded p-3 mb-3">
-                <a class="btn btn-primary" href="add">Add new product</a>
+                <a class="btn btn-primary" href="product-management/add">Add new product</a>
             </div>
             <div class="border rounded p-3 mb-3">
                 <h4>Search</h4>
                 <div class="d-flex justify-content-between" >
                     <div>
                         <label for="search-sku">SKU</label>
-                        <input class="form-control me-5" type="text" id="search-sku">
+                        <input class="form-control me-5" type="text" id="search-sku" maxlength="50">
                     </div>
                     <div>
 
                     <label for="search-name">Name</label>
-                    <input class="form-control me-5" type="text" id="search-name">
+                    <input class="form-control me-5" type="text" id="search-name" maxlength="150">
                     </div>
                         <div>
 
                     <label for="search-shortname">Short name</label>
-                    <input class="form-control me-5" type="text" id="search-shortname">
+                    <input class="form-control me-5" type="text" id="search-shortname" maxlength="50">
                         </div>
 
                     <button class="btn btn-primary btn-search">Search</button>
@@ -48,15 +48,15 @@
                 <tbody class="body">
                 @foreach($products as $product)
                     <tr data-id="{{$product->id}}">
-                        <td style="width: 150px"><input  class="form-control" name="SKU" type="text" value="{{$product->SKU}}"></td>
-                        <td><input class="form-control" type="text" name="name" value="{{$product->name}}"></td>
-                        <td style="width: 150px"><input  class="form-control" name="short_name" type="text" value="{{$product->short_name}}"></td>
+                        <td style="width: 150px"><input  class="form-control" name="SKU" type="text" value="{{$product->SKU}}" maxlength="50"></td>
+                        <td><input class="form-control" type="text" name="name" value="{{$product->name}}" maxlength="150"></td>
+                        <td style="width: 150px"><input  class="form-control" name="short_name" type="text" value="{{$product->short_name}}" maxlength="50"></td>
                         <td style="width: 150px"><input  class="form-control" name="price" type="text" value="{{$product->price}}"></td>
                         <td style="width: 150px" ><input class="form-control" name="fake_price" type="text" value="{{$product->fake_price}}"></td>
                         <td style="width: 150px">
                                 <img style="border-width: 1px; border-style: solid" width="40px" src="/storage/{{$product->avatar_url}}">
                             <span>
-                            <a style="text-decoration: none" href="edit-thumbnail/{{$product->id}}">Change</a>
+                            <a style="text-decoration: none" href="product-management/edit-thumbnail/{{$product->id}}">Change</a>
                             </span>
                         </td>
                         <td style="width: 100px">

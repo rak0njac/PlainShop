@@ -21,7 +21,7 @@
                     </tr>
                     <tr>
                         <td>Delivery address:</td>
-                        <td>{{$order->customer_address}}, {{$order->customer_postcode}} {{$order->customer_town}}</td>
+                        <td>{{$order->customer_address}}</td>
                     </tr>
                     <tr>
                         <td>Contact phone number:</td>

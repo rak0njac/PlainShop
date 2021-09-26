@@ -15,6 +15,10 @@ class HomeController extends Controller
         return view('homepage', ['products'=>$products]);
 }
     public function findActiveProduct(Request $request){
+        $request->validate([
+            'query' => 'required|max:50',
+        ]);
+
         $products = DB::table('products')->where('name', 'like', '%'.$request->input('query').'%')->where('hidden', '=', 0)->get();
         return view('homepage', ['products'=>$products]);
     }

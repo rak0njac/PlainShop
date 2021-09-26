@@ -25,12 +25,14 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'getActiveProducts']);
 Route::get('/product/{shortname}', [ProductController::class, 'getProductView']);
+Route::post('/search', [HomeController::class, 'findActiveProduct']);
 Route::post('/updatecart', [CartController::class, 'addToCart']);
 Route::get('/cart', [CartController::class, 'getCartView']);
 Route::post('/delete-from-cart', [ProductController::class, 'deleteFromCart']);
 Route::post('/cart-change-quantity', [ProductController::class, 'cartChangeQuantity']);
 Route::get('/order', [CartController::class, 'showOrderForm']);
 Route::post('/finishOrder', [CartController::class, 'finishOrder']);
+Route::get('/show-order-confirmation', [CartController::class, 'getOrderConfirmationView']);
 Route::any('/login', [LoginController::class, 'login'])->name('login');
 Route::get('/logout', [LoginController::class, 'logout']);
 
@@ -92,6 +94,8 @@ Route::middleware(['auth', 'agent'])->group(function () {
         // *************** GENERAL ***************
 
         Route::get('/', [AgentController::class, 'getAgentDashboard']);
+        Route::get("/new-order", [OrderController::class, 'getNewOrderView']);
+        Route::get('/order-management', [AgentController::class, 'getAllOrders']);
         Route::any("/change-password", [LoginController::class, 'changePassword']);
         Route::post("/set-first-password", [LoginController::class, 'setFirstPassword']);
 
@@ -103,7 +107,6 @@ Route::middleware(['auth', 'agent'])->group(function () {
         Route::get("/order-management/order-details/{orderId}", [OrderController::class, 'getOrderDetailsView']);
         Route::post('/order-management/order-details/save', [OrderController::class, 'saveDetail']);
         Route::post('/order-management/order-details/delete', [OrderController::class, 'deleteDetail']);
-        Route::get("/new-order", [OrderController::class, 'getNewOrderView']);
         Route::get("/new-order/get-colors/{productId}", [ProductController::class, 'getColors']);
         Route::get("/new-order/get-sizes/{productId}", [ProductController::class, 'getSizes']);
         Route::get("/new-order/get-price/{productId}", [ProductController::class, 'getPrice']);

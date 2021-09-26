@@ -12,6 +12,12 @@ class OrderController extends Controller
 {
     public function save(Request $request)
     {
+        $request->validate([
+            'customer_name'=>'required|max:50',
+            'customer_address'=>'required|max:150',
+            'customer_phone'=>'required|numeric|max:20',
+        ]);
+
         if(empty($request->input('id'))){
             $order = new Order;
             $order->tracking_nr = 0;
@@ -102,6 +108,11 @@ class OrderController extends Controller
     }
 
     public function saveDetail(Request $request){
+        $request->validate([
+            'qty'=>'required|min:1|max:99',
+        ]);
+
+
         if(!empty($request->input("id")))
             $detail = OrderDetail::whereId($request->input("id"))->first();
         else {

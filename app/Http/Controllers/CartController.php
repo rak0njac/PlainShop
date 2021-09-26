@@ -14,6 +14,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Cookie;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Session;
 
 class CartController extends Controller
 {
@@ -44,6 +45,11 @@ class CartController extends Controller
             Log::info('Cart id extracted from cookie:'.print_r($cartId));
             $cart = Cart::whereId($cartId)->first();
         }
+
+        $request->validate([
+            'product'=>'required',
+            'quantity'=>'required|min:1|max:99',
+        ]);
 
         $product = Product::whereId($request->input('product'))->first();
         $color = ProductColor::whereId($request->input('color'))->first();
@@ -87,40 +93,30 @@ class CartController extends Controller
 
 
     public function showOrderForm(){
-        if(isset($_COOKIE['cart'])) {
-            $cart = $_COOKIE['cart'];
-            $productsInCart = json_decode($cart, true);
-            //Log::info($productsInCart);
-            $arr = array();
-
-            foreach ($productsInCart as $product)
-            {
-                $p =            $product['product_id'];
-                //Log::info($p);
-                $thumbnail =    Product::findOrFail($p)->avatar_url;
-                $name =         Product::findOrFail($p)->name;
-                $color =        optional(ProductColor::find($product['color']))->hex;
-                $price =        $product['price'];
-                $size =         optional(ProductSize::find($product['size']))->name;
-                $quantity =     $product['quantity'];
-
-
-                $cookieid =     array_search($product,array_values($productsInCart));
-                array_push($arr, [$thumbnail, $name, $price, $color, $size, $quantity, $cookieid]);
-            }
-            return view('orderform', ['products'=>$arr]);        }
-        else {
-            return redirect()->action([HomeController::class, 'show']);
+        if(!Cookie::has('cart'))
+        {
+            return print_r('No cookie set');
         }
+        $cartId =  Cookie::get('cart');
+        $cart = Cart::whereId($cartId)->first();
+        Log::info($cart);
+
+            return view('orderform', ['cart'=>$cart]);
     }
 
     public function finishOrder(Request $request){
+        $request->validate([
+            'name'=>'required|max:50',
+            'address'=>'required|max:50',
+            'postcode'=>'required|numeric|size:5',
+            'town'=>'required|max:50',
+            'phone'=>'required|numeric|max:20',
+        ]);
+
         $order = new Order();
 
         $order->customer_name = $request->input('name');
-        $order->customer_address = $request->input('address');
-        $order->customer_town = $request->input('town');
-        $order->customer_postcode = $request->input('postcode');
+        $order->customer_address = $request->input('address').', '.$request->input('postcode').' '.$request->input('town');
         $order->customer_phone = $request->input('phone');
         $order->customer_email = $request->input('email');
         $order->status = 'New';
@@ -128,20 +124,20 @@ class CartController extends Controller
 
         $order->save();
 
-        $cart = $_COOKIE['cart'];
-        $productsInCart = json_decode($cart, true);
+        $cartId =  Cookie::get('cart');
+        $cart = Cart::whereId($cartId)->first();
 
         $subtotal = 0;
 
-        foreach($productsInCart as $product)
+        foreach($cart->details as $detail)
         {
             $orderDetail = new OrderDetail();
             $orderDetail->order_id = $order->id;
-            $orderDetail->product_id = $product['product_id'];
-            $orderDetail->product_color_id = $product['color'];
-            $orderDetail->product_size_id = $product['size'];
-            $orderDetail->price_after_tax = $product['price'];
-            $orderDetail->qty = $product['quantity'];
+            $orderDetail->product_id = $detail->product_id;
+            $orderDetail->product_color_id = $detail->product_color_id;
+            $orderDetail->product_size_id = $detail->product_size_id;
+            $orderDetail->price_after_tax = $detail->price;
+            $orderDetail->qty = $detail->qty;
             $orderDetail->total_price = $orderDetail->price_after_tax * $orderDetail->qty;
             $orderDetail->tax = 20;
             $orderDetail->price = $orderDetail->price_after_tax * ((100 - $orderDetail->tax)/100);
@@ -152,6 +148,17 @@ class CartController extends Controller
         $order->subtotal_price = $subtotal;
         $order->save();
 
+        Cookie::expire('cart');
+
+        //return view('orderconfirmation', ['order'=>$order]);
+        return redirect('/show-order-confirmation')->with(['order'=>$order]);
+    }
+
+    public function getOrderConfirmationView(){
+        $order = Session::get('order');
+        if(is_null($order)){
+            return redirect('/');
+        }
         return view('orderconfirmation', ['order'=>$order]);
     }
 }

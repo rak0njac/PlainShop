@@ -12,7 +12,7 @@
                     @csrf
                     <input type="hidden" name="product" value="{{$product->id}}">
                     <label class="form-label" for="hex">Hex</label>
-                    <input type="text" id="hex" name="hex" class="form-control">
+                    <input type="text" id="hex" name="hex" maxlength="6" class="form-control">
                     <input type="submit" class="btn btn-primary">
                 </form>
             </div>

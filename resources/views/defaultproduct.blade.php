@@ -68,7 +68,7 @@
                 @endif
                 <div class="d-flex align-items-center">
                     <label for="quantity">Quantity:</label>
-                    <input class="ms-2" type="number" min="1" style="width: 40px" id="quantity" name="quantity" value="1">
+                    <input class="ms-2" type="number" min="1" max="99" style="width: 40px" id="quantity" name="quantity" value="1">
                 </div>
                 <br>
                 <input type="submit" class="btn btn-warning btn-lg" value="Add to cart">

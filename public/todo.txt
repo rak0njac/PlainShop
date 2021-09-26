@@ -1,41 +1,43 @@
-CUSTOMER:
-
--add total price calculation on order form view
-
 GENERAL:
 
--add validation everywhere
--LOTS of code refactoring
+-bug fixing and code refactoring
 -add project documentation
 
 ------------DONE-----------
 
 MANAGER:
 
--add product thumbnail change view and controller ---NOTES: BEAUTIFY AND ADD VALIDATION
--implement save and delete for product table rows --NOTES: ADD VALIDATION
+-add product thumbnail change view and controller ---NOTES: BEAUTIFY
+-implement save and delete for product table rows
 -add search product by SKU, name, short_name --NOTES: ADD ENTER HOTKEY
--implement save and delete for order table rows --NOTES: ADD VALIDATION
+-implement save and delete for order table rows
 -add search order by ID, customer, GSM, email, tracking NR --NOTES: ADD ENTER HOTKEY
--add new product button, view and controller --NOTES: ADD VALIDATION
--add order details view and controller with "Change status to Sent" button --NOTES: ADD VALIDATION AND TOTAL PRICE CALCULATION
--add new agent view and controller --NOTES: ADD VALIDATION
--implement save and delete for agent table rows --NOTES: ADD VALIDATION
+-add new product button, view and controller
+-add order details view and controller with "Change status to Sent" button --NOTES: ADD TOTAL PRICE CALCULATION
+-add new agent view and controller
+-implement save and delete for agent table rows
 -add search agents by username, email, name --NOTES: ADD ENTER HOTKEY
 -add password change mechanism
--add product size and color management --NOTES: ADD VALIDATION
+-add product size and color management --NOTES: change colors and sizes buttons' icons
 -add back button to all manager pages
 
 AGENT:
 
 -add agent panel with create order, change password and logout buttons
--add create order view and controller --NOTES: ADD PRODUCT COLOR STYLES, VALIDATION AND TOTAL PRICE CALCULATION
--add a required mechanism for newly added agents to change their passwords --NOTES: ADD VALIDATION
+-add create order view and controller --NOTES: ADD PRODUCT COLOR STYLES AND TOTAL PRICE CALCULATION
+-add a required mechanism for newly added agents to change their passwords
 -set up authorization guards
 
 CUSTOMER:
 
 -add number of products next to "Cart" text in navbar (and prevent from clicking if 0 products in cart)
+-order form view --NOTES: AND TOTAL PRICE CALCULATION
+
+GENERAL:
+
+-add validation everywhere
+
+
 
 
 

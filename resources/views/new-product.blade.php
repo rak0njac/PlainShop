@@ -8,17 +8,17 @@
             <form method="POST" action="add" enctype="multipart/form-data">
                 @csrf
                 <label for="sku">SKU</label>
-                <input class="form-control" name="sku" id="sku" type="text">
+                <input class="form-control" name="sku" id="sku" maxlength="50" type="text">
                 <label for="name">Name</label>
-                <input class="form-control" name="name" id="name" type="text">
+                <input class="form-control" name="name" id="name" maxlength="150" type="text">
                 <label for="shortname">Short name</label>
-                <input class="form-control" name="shortname" id="shortname" type="text">
+                <input class="form-control" name="shortname" id="shortname" maxlength="50" type="text">
                 <label for="fakeprice">Fake price</label>
-                <input class="form-control" name="fakeprice" id="fakeprice" type="text">
+                <input class="form-control" name="fakeprice" id="fakeprice" maxlength="20" type="text">
                 <label for="price">Price</label>
-                <input class="form-control" name="price" id="price" type="text">
+                <input class="form-control" name="price" id="price" maxlength="20" type="text">
                 <label for="thumbnail">Thumbnail</label>
-                <input class="form-control" name="thumbnail" id="thumbnail" type="file">
+                <input type="file" name="thumbnail" id="thumbnail" accept=".jpg,.bmp,.png,.webp" class="form-control">
                 <label for="hidden">Hidden</label>
                 <select class="form-select" name="hidden" id="hidden">
                     <option value="0" selected>No</option>

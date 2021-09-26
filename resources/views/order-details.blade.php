@@ -10,15 +10,15 @@
 {{--                id:id, customer_name:customer_name,customer_address:customer_address,customer_phone:customer_phone,customer_email:customer_email--}}
                 <input class="form-control" name="id" id="id" type="hidden" value="{{$order->id}}">
                 <label for="customer_name">Customer</label>
-                <input class="form-control" name="customer_name" id="customer_name" type="text" value="{{$order->customer_name}}">
+                <input class="form-control" name="customer_name" maxlength="50" id="customer_name" type="text" value="{{$order->customer_name}}">
                 <label for="customer_address">Address</label>
-                <input class="form-control" name="customer_address" id="customer_address" type="text" value="{{$order->customer_address}}">
+                <input class="form-control" name="customer_address" maxlength="50" id="customer_address" type="text" value="{{$order->customer_address}}">
                 <label for="customer_phone">GSM</label>
-                <input class="form-control" name="customer_phone" id="customer_phone" type="text" value="{{$order->customer_phone}}">
+                <input class="form-control" name="customer_phone" maxlength="20" id="customer_phone" type="text" value="{{$order->customer_phone}}">
                 <label for="customer_email">Email</label>
-                <input class="form-control" name="customer_email" id="customer_email" type="text" value="{{$order->customer_email}}">
+                <input class="form-control" name="customer_email" maxlength="50" id="customer_email" type="text" value="{{$order->customer_email}}">
                 <label for="tracking_nr">Tracking</label>
-                <input class="form-control" name="tracking_nr" id="tracking_nr" type="text" value="{{$order->tracking_nr}}">
+                <input class="form-control" name="tracking_nr" maxlength="50" id="tracking_nr" type="text" value="{{$order->tracking_nr}}">
                 <label for="status">Status</label>
                 <select class="form-select" name="status" id="status" data-selected="{{$order->status}}">
                     <option value="New">
@@ -85,7 +85,7 @@
                             @endif
                         </div>
                         <div class="col">
-                            <input type="number" name="qty" id="qty" class="form-control" value="{{$detail->qty}}">
+                            <input type="number" name="qty" id="qty" class="form-control" min="1" max="99" value="{{$detail->qty}}">
                         </div>
                         <div class="col">
                             <input type="text" name="price_after_tax" id="price_after_tax" class="form-control" value="{{$detail->price_after_tax}}">

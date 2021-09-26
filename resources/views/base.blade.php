@@ -37,7 +37,7 @@
     <div class="col d-flex justify-content-center">
         <form class="form-inline" method="post" action="/search">
             <div class="input-group">
-                <input type="text" name="query" style="width: 400px;" class="form-control" placeholder="Search" aria-label="Search">
+                <input type="text" name="query" style="width: 400px;" class="form-control" placeholder="Search" maxlength="50" aria-label="Search">
                 <div class="input-group-append">
                     <button type="submit" class="btn btn-secondary">
                         <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -59,24 +59,17 @@
         </div>
 
 
-
-
-{{--    if(!Cookie::has('cart'))--}}
-{{--    {--}}
-{{--    return print_r('No cookie set');--}}
-{{--    }--}}
-{{--    else {--}}
-{{--    $cartId =  Cookie::get('cart');--}}
-{{--    $cart = Cart::whereId($cartId)->first();--}}
-{{--    }--}}
-
-{{--    return view('cart', ['cart'=>$cart]);--}}
-
-
-
 </nav>
 
-
+@if ($errors->any())
+    <div class="alert alert-danger mb-2">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
