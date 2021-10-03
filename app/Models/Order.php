@@ -45,4 +45,14 @@ class Order extends Model
     {
         return $this->hasMany(OrderDetail::class);
     }
+
+    public function calculateSubtotal(){
+        $order = $this;
+        $sum = 0;
+        foreach($order->details as $detail){
+            $sum += $detail->total_price;
+        }
+        $order->subtotal_price = $sum;
+        $order->save(); //TODO: Check if needed
+    }
 }

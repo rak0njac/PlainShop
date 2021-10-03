@@ -10,37 +10,39 @@ use Illuminate\Validation\Rules\Password;
 
 class AgentController extends Controller
 {
-    public function getAllOrders()
-    {
-        $orders = Order::all();
-        return view('ordermanagement', ['orders'=>$orders]);
+    public function index(){
+        return view('agent');
     }
 
-    public function add(Request $request){
+    public function list(){
+        $agents = User::whereType('agent')->get();
+        return view('agentmanagement', ['agents'=>$agents]);
+    }
+
+    public function new(Request $request){
         if($request->isMethod('get')){
             return view('new-agent');
         }
+
         $request->validate([
             'email'=>'required|email',
             'name'=>'required|max:50',
             'password' => ['required', Password::min(8)->numbers()],
         ]);
 
-            $agent = new User();
-            $agent->email = $request->input("email");
-            $agent->name = $request->input("name");
-            $agent->username = "TEST";
-            $agent->password = Hash::make("");
-            $agent->type = "agent";
-            $agent->password_change_required = 1;
+        $agent = new User();
+        $agent->email = $request->input("email");
+        $agent->name = $request->input("name");
+        $agent->username = "TEST";
+        $agent->password = Hash::make("");
+        $agent->type = "agent";
+        $agent->password_change_required = 1;
 
-            $agent->save();
-            return redirect()->action([ManagerController::class, 'getAllAgents']);
-
-
+        $agent->save();
+        return redirect()->action([AgentController::class, 'list']);
     }
 
-    public function save(Request $request)
+    public function update(Request $request)
     {
         $request->validate([
             'email'=>'required|email',
@@ -61,9 +63,8 @@ class AgentController extends Controller
         return 'SUCCESS';
     }
 
-    public function search(Request $request)
+    public function find(Request $request)
     {
-
         $name = $request->input('name');
         $email = $request->input('email');
 
@@ -74,13 +75,4 @@ class AgentController extends Controller
 
         return $agents;
     }
-
-    public function getAgentDashboard(){
-        return view('agent');
-    }
-
-
-    public function findOrder(Request $request){}
-    public function addOrder(Request $request){}
-    public function updateOrder(Request $request){}
 }

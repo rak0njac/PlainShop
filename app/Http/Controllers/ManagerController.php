@@ -8,30 +8,9 @@ use App\Models\Product;
 use App\Models\User;
 use Illuminate\Http\Request;
 
-class ManagerController extends AgentController
+class ManagerController extends Controller
 {
-    public function getAllAgents()
-    {
-        $agents = User::whereType('agent')->get();
-        return view('agentmanagement', ['agents'=>$agents]);
-    }
-
-    public function getAllProducts()
-    {
-        $products = Product::all();
-        return view('productmanagement', ['products'=>$products]);
-    }
-
-    public function getAdminDashboard(){
+    public function index(){
         return view('manager');
     }
-
-    public function findAgent(Request $request){}
-    public function findProduct(Request $request){}
-
-    public function addAgent(Request $request){}
-    public function addProduct(Request $request){}
-
-    public function updateAgent(Request $request){}
-    public function updateProduct(Request $request){}
 }

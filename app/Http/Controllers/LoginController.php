@@ -11,7 +11,6 @@ use Illuminate\Testing\Fluent\Concerns\Has;
 
 class LoginController extends Controller
 {
-
     public function login(Request $request)
     {
         // GET
@@ -21,7 +20,9 @@ class LoginController extends Controller
                     return redirect('/admin');
                 return redirect('/agent');
             } else return view('login');
-        } // POST
+        }
+
+        // POST
         else {
             $email = $request->input('email');
             $pass = $request->input('pass');
@@ -65,26 +66,28 @@ class LoginController extends Controller
             if (Auth::check()) {
                 return view('change-password');
             } else return view('login');
-        } // POST
+        }
+
+        // POST
         else {
             if (Auth::check()) {
-                $old = $request->input('old');
-                Log::info("Auth::user()->password is ".Auth::user()->password);
-                Log::info("Hash::make($old) is ".Hash::make($old));
-                if (!(Hash::check($old, Auth::user()->password))) {
+                $oldPass = $request->input('old');
+//                Log::info("Auth::user()->password is ".Auth::user()->password);
+//                Log::info("Hash::make($oldPass) is ".Hash::make($oldPass));
+                if (!(Hash::check($oldPass, Auth::user()->password))) {
                     return back()->withErrors([
                         'user' => "The old (current) password you entered doesn't match your actual current password.",
                     ]);
                 }
-                $new = $request->input('new');
-                $newConfirm = $request->input('new-confirm');
-                if ($new != $newConfirm) {
+                $newPass = $request->input('new');
+                $confirmNewPass = $request->input('new-confirm');
+                if ($newPass != $confirmNewPass) {
                     return back()->withErrors([
                         'user' => "New password doesn't match confirm new password.",
                     ]);
                 }
-                $new = Hash::make($new);
-                Auth::user()->password = $new;
+                $newPass = Hash::make($newPass);
+                Auth::user()->password = $newPass;
                 Auth::user()->save();
                 return redirect('/login');
                 //Hash new password, find user by email, set new hashed password and return to main manager panel
@@ -97,21 +100,21 @@ class LoginController extends Controller
     {
         $agent = User::whereId($request->input('agent'))->first();
         if($agent->password_change_required){
-            $new = $request->input('new');
-            $newConfirm = $request->input('new-confirm');
-            if ($new != $newConfirm) {
+            $newPass = $request->input('new');
+            $newPassConfirm = $request->input('new-confirm');
+            if ($newPass != $newPassConfirm) {
                 return back()->withErrors([
                     'user' => "New password doesn't match confirm new password.",
                 ]);
             }
-            $new = Hash::make($new);
-            $agent->password = $new;
+            $newPass = Hash::make($newPass);
+            $agent->password = $newPass;
             $agent->password_change_required = 0;
             $agent->save();
 
             $credentials = [
                 'email' => $agent->email,
-                'password' => $new,
+                'password' => $newPass,
             ];
 
             if (Auth::attempt($credentials)) {
